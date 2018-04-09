@@ -1,4 +1,4 @@
-class UnionFind(object):
+class UnionFind():
     def __init__(self):
         self.cnt = 0
         self.dic = {}
