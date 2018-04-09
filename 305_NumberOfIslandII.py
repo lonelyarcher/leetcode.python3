@@ -9,10 +9,10 @@ class UnionFind():
             self.cnt += 1
     
     def find(self, p):
-        anc = self.dic[p]
-        while anc != self.dic[anc]:
-            anc = self.dic[self.dic[anc]]
-        return anc
+        while p != self.dic[p]:
+            self.dic[p] = self.dic[self.dic[p]]
+            p = self.dic[p]
+        return p
 
     def unite(self, p, q):
         p_anc, q_anc = self.find(p), self.find(q)
