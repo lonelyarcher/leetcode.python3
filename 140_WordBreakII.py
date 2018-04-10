@@ -7,17 +7,15 @@ class DfsSolution:
         """
 
         dict = set(wordDict)
-        res = []
-        self.dfs(res, [], s, dict)
-        return res
+        return self.dfs(0, s, dict)
 
-    def dfs(self, res, path, s, dict):
-        if not s:
-            res.append(" ".join(path))
-            return 
-        for i in range(1, len(s) + 1):
-            if s[:i] in dict:
-                self.dfs(res, path + [s[:i]], s[i:], dict)
+
+    def dfs(self, i, s, dict):
+        res = []
+        for j in range(i, len(s) + 1):
+            if s[i:j] in dict:
+                res += [s[i:j]] if j == len(s) else [s[i:j] + " " + x for x in self.dfs(j, s, dict)]
+        return res
 
 s = "catsanddog"
 wordDict = ["cat", "cats", "and", "sand", "dog"]
