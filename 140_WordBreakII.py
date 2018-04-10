@@ -22,7 +22,7 @@ wordDict = ["cat", "cats", "and", "sand", "dog"]
 s1 = DfsSolution()
 print(s1.wordBreak(s, wordDict))
 
-
+import collections
 class DpSolution:
     def wordBreak(self, s, wordDict):
         """
@@ -30,13 +30,12 @@ class DpSolution:
         :type wordDict: List[str]
         :rtype: List[str]
         """
-        mem = {}
+        mem = collections.defaultdict(list)
         dict = set(wordDict)
 
         def dfs(i, s, dict):
             if mem.get(i):
                 return mem[i]
-            mem[i] = []
             for j in range(i + 1, len(s) + 1):
                 if s[i:j] in dict:
                     mem[i] += [s[i:j]] if j == len(s) else [ s[i:j] + " " + x for x in dfs(j, s, dict)]
