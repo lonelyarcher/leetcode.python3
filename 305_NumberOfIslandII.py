@@ -10,7 +10,7 @@ class UnionFind():
     
     def find(self, p):
         while p != self.dic[p]:
-            self.dic[p] = self.dic[self.dic[p]]
+            self.dic[p] = self.dic[self.dic[p]] #path compress to make uf amortize O(n), normal is O(nlogn) 
             p = self.dic[p]
         return p
 
