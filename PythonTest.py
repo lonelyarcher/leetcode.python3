@@ -10,3 +10,7 @@ a = [[0, 1], [1, 3]]
 b = [[2, 4]]
 a += b
 print(a)
+
+
+dict = {None: 2}
+print(dict.setdefault(None, None.left))
