@@ -1,5 +1,5 @@
 import datetime
-x = 3 and 1
+x = 3 and 1 # and first judge if the first argument is None, '' or 0, if yes then return it, if not return the second argument
 print("{}".format("3.1"))
 print("{:s}".format("abc"))
 print("{:f}".format(3.14))
@@ -31,4 +31,4 @@ for i in range(5):
     xx = i
 print(xx) # variable can live outside of loop
 
-print("a" or "d")
+print(5/2) # divide / in python3 return float, while // return int
