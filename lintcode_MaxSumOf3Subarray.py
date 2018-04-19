@@ -13,10 +13,10 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        n = len(nums)
+        n = len(nums) # dp better use 0 to n inclusively, will one more element that the object list
         # max sum of one k length subarray
-        s1 = [-inf for _ in range(k)]
-        for i in range(k, n + 1):
+        s1 = [-inf for _ in range(k)] 
+        for i in range(k, n + 1):  # can't use list comprehension, because the comprehension can't refer itself like s1[i] need to refer s1[-1]
             s1.append(max(sum(nums[i - k: i]), s1[-1])) 
         # max sum of two k length subarray
         s2 = [-inf for _ in range(2*k)]
