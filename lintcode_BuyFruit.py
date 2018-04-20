@@ -46,21 +46,67 @@ shoppingCart:
 [orange, apple, apple, orange, mango, orange]
 return 1。
 '''
-# we can flat the list<list> then double point go through to find match or not
+
 import itertools
 class Solution():
-    def buyFruit(self, codeList, shoppingCart):
-        codes = itertools.chain(codeList)
+    # we can flat the list<list> then double point go through to find match or not
+    def buyFruit_flat(self, codesList, shoppingCart):
+        codes = list(itertools.chain.from_iterable(codesList))
+        codes = [c for c in sublist for sublist in codesList]
+        print(codes)
         i, j = 0, 0
         m, n = len(codes), len(shoppingCart)
         def isMatch(c, s):
             if c == 'anything' or c == s: return True
-            return false
+            return False
         while i < m and j < n:
             if isMatch(codes[i], shoppingCart[j]):
-                j += 1
+                i += 1
             else:
-                j = 0
-            i += 1
-        return j == n
-print(Solution.buyFruit())
+                i = 0
+            j += 1
+        return i == m
+
+    # best solution, loop the shoppingCart which the template, if find pattern (codesList) match to end, then return True
+    # to iterate the list of list, use two dimension point i, j. when matching, move forward j, if j reach end of sublist codesList[i], move I and j = 0
+    def buyFruit(self, codesList, shoppingCart):
+        i, j = 0, 0
+        def isMatch(c, s):
+            if c == 'anything' or c == s: return True
+            else: return False
+        for sh in shoppingCart:
+            if isMatch(codesList[i][j], sh):
+                j += 1
+                if j == len(codesList[i]):
+                    i += 1
+                    j = 0
+                    if i == len(codesList): return True
+            else:
+                i, j = 0, 0
+        return False
+codesList = [
+['apple', 'apple'],
+['orange', 'banana', 'orange']
+]
+shoppingCart = ['orange', 'apple', 'apple', 'orange', 'banana', 'orange']
+print(Solution().buyFruit(codesList, shoppingCart))
+
+codesList = [
+['orange', 'banana', 'orange'],
+['apple', 'apple']
+]
+shoppingCart = ['orange', 'apple', 'apple', 'orange', 'banana', 'orange']
+print(Solution().buyFruit(codesList, shoppingCart))
+codesList = [
+['apple', 'apple'],
+['orange', 'banana', 'orange'],
+['pear', 'orange', 'grape']
+]
+shoppingCart = ['orange', 'apple', 'apple', 'orange', 'banana', 'orange', 'pear', 'grape']
+print(Solution().buyFruit(codesList, shoppingCart))
+codesList = [
+['apple', 'apple'],
+['orange', 'anything', 'orange']
+]
+shoppingCart = ['orange', 'apple', 'apple', 'orange', 'mango', 'orange']
+print(Solution().buyFruit(codesList, shoppingCart))
