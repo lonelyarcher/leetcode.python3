@@ -56,11 +56,8 @@ class Solution():
         print(codes)
         i, j = 0, 0
         m, n = len(codes), len(shoppingCart)
-        def isMatch(c, s):
-            if c == 'anything' or c == s: return True
-            return False
         while i < m and j < n:
-            if isMatch(codes[i], shoppingCart[j]):
+            if codes[i] == 'anything' or shoppingCart[j] == codes[i]:
                 i += 1
             else:
                 i = 0
@@ -71,11 +68,8 @@ class Solution():
     # to iterate the list of list, use two dimension point i, j. when matching, move forward j, if j reach end of sublist codesList[i], move I and j = 0
     def buyFruit(self, codesList, shoppingCart):
         i, j = 0, 0
-        def isMatch(c, s):
-            if c == 'anything' or c == s: return True
-            else: return False
         for sh in shoppingCart:
-            if isMatch(codesList[i][j], sh):
+            if codesList[i][j] == 'anything' or codesList[i][j] == sh:
                 j += 1
                 if j == len(codesList[i]):
                     i += 1
@@ -84,6 +78,8 @@ class Solution():
             else:
                 i, j = 0, 0
         return False
+
+# test cases
 codesList = [
 ['apple', 'apple'],
 ['orange', 'banana', 'orange']
