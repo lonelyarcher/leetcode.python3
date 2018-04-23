@@ -12,19 +12,21 @@ double findMedian() - Return the median of all elements so far.
 import heapq
 class Solution():
     def __init__(self):
-        self.maxHeap = [] # max number on the top of heap
-        self.minHeap = [] # min number on the top of heap
+        self.bottom = [] # the bottom heap (max heap) 
+        self.top = [] # the top heap (min heap)
 
     def addNum(self, num):
-        if len(self.maxHeap) == len(self.minHeap):
-            heapq.heappush(self.minHeap, num)
-            heapq.heappush(self.maxHeap, -heapq.heappop(self.minHeap))
+        if len(self.bottom) == len(self.top):
+            heapq.heappush(self.top, num)
+            heapq.heappush(self.bottom, -heapq.heappop(self.top))
         else:
-            heapq.heappush(self.maxHeap, -num)
-            heapq.heappush(self.minHeap, -heapq.heappop(self.maxHeap))
+            heapq.heappush(self.bottom, -num)
+            heapq.heappush(self.top, -heapq.heappop(self.bottom))
          
     def findMedian(self):
-        return -self.maxHeap[0] if len(self.maxHeap) == len(self.minHeap) + 1 else (-self.maxHeap[0] + self.minHeap[0])/2.0  # peek the heap in python is heap[0] 
+        
+        return -self.bottom[0] if len(self.bottom) == len(self.top) + 1 else (-self.bottom[0] + self.top[0])/2.0  
+    
 
 
 # test

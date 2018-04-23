@@ -32,3 +32,6 @@ for i in range(5):
 print(xx) # variable can live outside of loop
 
 print(5/2) # divide / in python3 return float, while // return int
+
+s1 = 'abcdefg'
+print(s1.rfind('e'))
