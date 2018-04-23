@@ -1,4 +1,5 @@
 import datetime
+import itertools
 x = 3 and 1 # and first judge if the first argument is None, '' or 0, if yes then return it, if not return the second argument
 print("{}".format("3.1"))
 print("{:s}".format("abc"))
@@ -33,5 +34,10 @@ print(xx) # variable can live outside of loop
 
 print(5/2) # divide / in python3 return float, while // return int
 
-s1 = 'abcdefg'
-print(s1.rfind('e'))
+s1 = 'aabccccdeeefg' #itertools.groupby required sorted first
+dict1 = { k: len(list(g)) for k, g in itertools.groupby(s1) }
+print(dict1)
+
+d1 = {'a': 1}
+d2 = {'a': 2}
+print(d1|d2)
