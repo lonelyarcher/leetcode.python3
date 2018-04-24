@@ -19,6 +19,17 @@ class Solution(object):
             res = max(res, i - j + 1)
         return res
 
+    def lengthOfLongestSubstringKDistinct2(self, s, k):
+        res = 0
+        m = {}
+        for i,c in enumerate(s):
+            m[c] = i
+            if len(m) > k:
+                index = min(m.values)
+                del m[m[index]]
+            res = max(res, i - index)
+        return res
+
 # test
 s = "eceba"
 k = 2
