@@ -38,6 +38,10 @@ s1 = 'aabccccdeeefg' #itertools.groupby required sorted first
 dict1 = { k: len(list(g)) for k, g in itertools.groupby(s1) }
 print(dict1)
 
-d1 = {'a': 1}
-d2 = {'a': 2}
-print(d1|d2)
+
+x = 1
+def f(y):
+    global x
+    x += y
+    print(x)
+f(2)

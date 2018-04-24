@@ -24,3 +24,6 @@ class Solution:
             '''
             s[i] = (not s[i-1]) or (not s[i-2])
         return s[n]
+
+for x in range(1, 100):
+    print(x, Solution().coinsInALine(x))   
