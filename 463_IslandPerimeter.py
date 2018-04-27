@@ -18,6 +18,7 @@ Example:
 Answer: 16
 Explanation: The perimeter is the 16 yellow stripes in the image below:
 '''
+import operator
 class Solution:
      def islandPerimeter(self, grid):
         """
@@ -28,6 +29,7 @@ class Solution:
         grid = {i + 1j*j: grid[i][j] for i in range(len(grid)) for j in range(len(grid[0]))}
         res = 0
         def dfs(x):
+            nonlocal res
             for i in range(4):
                 grid[x] = 2
                 y = x + 1j**i
@@ -40,9 +42,17 @@ class Solution:
                 dfs(x)
         return res
 
+
+     def islandPerimeter2(self, grid):
+         return sum(
+             sum(
+                 map(operator.ne, [0] + row, row + 0)
+             ) for row in grid + list(map(list, zip(*grid)))
+         )
+
 # test
 grid = [[0,1,0,0],
         [1,1,1,0],
         [0,1,0,0],
         [1,1,0,0]]
-print(Solution().islandPerimeter(grid))
+print(Solution().islandPerimeter2(grid))

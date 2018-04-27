@@ -4,7 +4,6 @@ x = 3 and 1 # and first judge if the first argument is None, '' or 0, if yes the
 print("{}".format("3.1"))
 print("{:s}".format("abc"))
 print("{:f}".format(3.14))
-print("{:%m/%d/%Y %H:%M}".format(datetime.datetime(2018,4,11,9,53)))
 print("{}/{}/{} {}:{}".format(2018,4,11,9,53))
 
 a = [[0, 1], [1, 3]]
@@ -41,7 +40,21 @@ print(dict1)
 
 x = 1
 def f(y):
-    global x
+    global x  # global to access outside function, nonlocal in nested functions to access parent function variables
     x += y
     print(x)
 f(2)
+
+it = iter([1,2,3])
+it2 = iter([4,5,6])
+
+
+it3 = itertools.chain(it, it2)
+for i in it3:
+    print(i)
+
+it3 = itertools.chain([1,1,1], [2,3,4])
+for i in it3:
+    print(i)
+
+print(type(it))
