@@ -21,7 +21,7 @@ Explanation: The perimeter is the 16 yellow stripes in the image below:
 import operator
 import itertools
 class Solution:
-     def islandPerimeter(self, grid):
+    def islandPerimeter(self, grid):
         """
         :type grid: List[List[int]]
         :rtype: int
@@ -44,15 +44,41 @@ class Solution:
         return res
 
 
-     def islandPerimeter2(self, grid):
-         return sum(
-             sum(map(operator.ne, [0] + row, row + [0])) 
-             for row in itertools.chain(iter(grid), map(list, zip(*grid)))
-         ) # zip return iterator of tuple, chain can combine the iterators
+    def islandPerimeter2(self, grid):
+        return sum(
+            sum(map(operator.ne, [0] + row, row + [0])) 
+            for row in itertools.chain(iter(grid), map(list, zip(*grid)))
+        ) # zip return iterator of tuple, chain can combine the iterators
+
+    def islandPerimeter3(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        if not grid:
+            return 0
+
+        perimeter = 0
+        row_up = itertools.repeat(0) # use repeat to initiate list iterator 
+        for row in grid:
+            val_left = 0
+
+            for val_up, val in zip(row_up, row):
+                perimeter += val != val_up
+                perimeter += val != val_left
+                val_left = val
+            else:
+                perimeter += val_left
+
+            row_up = row
+        else:
+            perimeter += sum(row_up)
+
+        return perimeter
 
 # test
 grid = [[0,1,0,0],
         [1,1,1,0],
         [0,1,0,0],
         [1,1,0,0]]
-print(Solution().islandPerimeter2(grid))
+print(Solution().islandPerimeter3(grid))
