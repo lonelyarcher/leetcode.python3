@@ -37,7 +37,6 @@ s1 = 'aabccccdeeefg' #itertools.groupby required sorted first
 dict1 = { k: len(list(g)) for k, g in itertools.groupby(s1) }
 print(dict1)
 
-
 x = 1
 def f(y):
     global x  # global to access outside function, nonlocal in nested functions to access parent function variables
@@ -58,3 +57,4 @@ for i in it3:
     print(i)
 
 print(type(it))
+

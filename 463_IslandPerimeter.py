@@ -19,6 +19,7 @@ Answer: 16
 Explanation: The perimeter is the 16 yellow stripes in the image below:
 '''
 import operator
+import itertools
 class Solution:
      def islandPerimeter(self, grid):
         """
@@ -47,7 +48,7 @@ class Solution:
          return sum(
              sum(
                  map(operator.ne, [0] + row, row + 0)
-             ) for row in grid + list(map(list, zip(*grid)))
+             ) for row in itertools.chain(iter(grid), map(list, zip(*grid)))
          )
 
 # test
