@@ -1,3 +1,14 @@
+'''
+find out wether you can find treasure in rooms
+room connect room (neighbors list)
+room has key to connect two rooms. (key: (room1, room2)) 
+dfs, recursion will not work, because it has two factors: room connections and keys
+so need two stacks (rooms and keys) to do while loop for dfs. 
+First pop the rooms, if no room available, pop keys to add rooms.
+If both of stack empty, then ends. 
+visited set to record visited rooms
+'''
+
 class Room:
     def __init__(self):
         self.treasure = False
@@ -18,13 +29,15 @@ class Solution:
                 for child in cur.neighbors:
                     if child not in visited:
                         rooms.append(child)
-            elif keys:
+            if keys:
                 a, b = keys.pop()
                 if a in visited and b not in visited:
                     rooms.append(b)
                 elif b in visited and a not in visited:
                     rooms.append(a)
         return False
+
+        
 
 # test
 a = Room()

@@ -57,4 +57,5 @@ for i in it3:
     print(i)
 
 print(type(it))
-
+list1 = [1,2,3]
+print(type(list1[-1]))
