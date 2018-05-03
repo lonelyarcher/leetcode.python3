@@ -18,12 +18,33 @@ class Solution(object):
         :type wordList: Set[str]
         :rtype: int
         """
+        if beginWord == endWord: return 0
+        cnt = 1
+        visited = set()
+        # prepare wordList set
+        dict = defaultdict(list)
+        for w in wordList:
+            for i in range(len(w)):
+                dict[w[:i]+'_'+w[i+1:]].append(w)
+        queue = [beginWord]
+        while queue:
+            n = len(queue)
+            for i in range(n):
+                w = queue.pop(0)
+                visited.add(w)
+                tmp = w[:i]+'_'+w[i+1:]
+                if tmp in dict:
+                    for nex in dict[tmp]:
+                        if nex == endWord: return cnt
+                        if nex not in visited:
+                            queue.append(nex)
+            cnt += 1
+        return -1
 
-        def transform(w):
-            res = inf
-            # prepare wordList set
-            dict = defaultdict(list)
-            for w in wordList:
-                for i in range(len(w)):
-                    dict[w[:i]+'_'+w[i+1:]].append(w)
-            queue = [beginWord]
+wordList = {"hot","dot","dog","lot","log"}
+beginWord = "hot"
+endWord = "dog"
+so = Solution()
+a = so.ladderLength(beginWord, endWord, wordList)
+print(a)
+
