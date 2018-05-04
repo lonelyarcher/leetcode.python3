@@ -17,7 +17,7 @@ class Solution(object):
         queue = [[beginWord]]
         while queue:
             path = queue.pop(0)
-            if res and len(res[0]) <= len(path): return res
+            if res and len(res[0]) <= len(path): return res # while loop stop condition: once find the endWord and finish this step of path.
             for i in range(len(path[-1])):
                 k = path[-1][:i]+'_'+path[-1][i+1:]
                 if k in dict:

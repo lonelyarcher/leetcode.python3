@@ -20,30 +20,32 @@ class Solution(object):
         """
         if beginWord == endWord: return 0
         cnt = 1
-        visited = set()
+        visited = set() # not necessary if we can remove the visited word from dict
         # prepare wordList set
         dict = defaultdict(list)
+        wordList.add(endWord)
         for w in wordList:
             for i in range(len(w)):
                 dict[w[:i]+'_'+w[i+1:]].append(w)
         queue = [beginWord]
         while queue:
             n = len(queue)
+            visited.update(queue)
             for i in range(n):
                 w = queue.pop(0)
-                visited.add(w)
-                tmp = w[:i]+'_'+w[i+1:]
-                if tmp in dict:
-                    for nex in dict[tmp]:
-                        if nex == endWord: return cnt
-                        if nex not in visited:
-                            queue.append(nex)
+                for j in range(len(w)):
+                    tmp = w[:j]+'_'+w[j+1:]
+                    if tmp in dict:
+                        for nex in dict[tmp]:
+                            if nex == endWord: return cnt + 1
+                            if nex not in visited:
+                                queue.append(nex)
             cnt += 1
         return -1
 
 wordList = {"hot","dot","dog","lot","log"}
-beginWord = "hot"
-endWord = "dog"
+beginWord = "hit"
+endWord = "cog"
 so = Solution()
 a = so.ladderLength(beginWord, endWord, wordList)
 print(a)
