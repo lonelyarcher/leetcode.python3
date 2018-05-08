@@ -14,7 +14,7 @@ matrix = [
 cheese。
 不过我们可以通过剪枝来优化。因为我们最后需要输出的steps,所以如果我们存当
 前最小的steps，只要超过这个steps我们就没必要再往下dfs了。需要注意的是，因
-为路径可以重复走 **最多重复两次**（因为有可能cheese在一条死路里，必须原路返回），所以我们
+为路径可以重复走（因为有可能cheese在一条死路里，必须原路返回， 十字路口可能要访问6次），所以我们
 要用一个set来存已经吃过的cheese，再走到这个cheese的时候我们就不+1 cheese了。
 '''
 from math import inf
@@ -23,10 +23,10 @@ class Solution(object):
         if not matrix or not matrix[0]: return 0
         maze = {i + 1j*j: [matrix[i][j], 0] for i in range(len(matrix)) for j in range(len(matrix[0]))}
         cheese = sum([1 for i in maze if maze[i][0] == 2])
-        minStep = inf
+        minStep = 100
         def dfs(cur, c, step):
             nonlocal minStep
-            if step >= minStep or maze[cur][1] == 2 or maze[cur][0] == 1: return 
+            if step >= minStep or maze[cur][0] == 1: return 
             maze[cur][1] += 1
             if maze[cur][0] == 2 and maze[cur][1] == 1: c += 1
             if cur == end[0] + 1j*end[1] and c == cheese: minStep = step          
