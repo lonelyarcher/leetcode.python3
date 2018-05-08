@@ -59,3 +59,5 @@ for i in it3:
 print(type(it))
 list1 = [1,2,3]
 print(type(list1[-1]))
+
+print(1+1j*1 == 1+1j**1)

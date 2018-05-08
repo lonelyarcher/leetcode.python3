@@ -25,6 +25,16 @@ class Solution(object):
                 return dfs(p[1:], s[len(dic[p[0]]):], dic)
             for i in range(1, len(s)):
                 dic[p[0]] = s[:i]
-                dfs(p[1:], s[i:], dic)
+                if dfs(p[1:], s[i:], dic): return True
+                else: dic.pop(p[0])
+            return False
         return dfs(pattern, str, {})
-# test
+pattern = "abab"
+str1 = "redblueredblue" 
+print(Solution().wordPatternMatch(pattern, str1))
+pattern = "aaaa"
+str1 = "asdasdasdasd" 
+print(Solution().wordPatternMatch(pattern, str1))
+pattern = "aabb"
+str1 = "xyzabcxzyabc"
+print(Solution().wordPatternMatch(pattern, str1))
