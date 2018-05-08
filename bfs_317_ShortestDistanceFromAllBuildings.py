@@ -32,7 +32,7 @@ class Solution(object):
         for (i,j) in matrix:
             if grid[i][j] == 1:
                 #BFS
-                queue = [(i,j,0)]
+                queue = [(i,j,0)] # first two numbers in tuple is coordinates, the last one is steps of current cell from the bfs beginning cell.
                 while queue:
                     r, c, step = queue.pop(0)
                     for m in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
