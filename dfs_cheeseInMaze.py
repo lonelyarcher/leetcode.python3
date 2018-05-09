@@ -26,7 +26,7 @@ class Solution(object):
         minStep = 100
         def dfs(cur, c, step):
             nonlocal minStep
-            if step >= minStep or maze[cur][0] == 1: return 
+            if step >= minStep or maze[cur][0] == 1 or maze[cur][1] > 6: return 
             maze[cur][1] += 1
             if maze[cur][0] == 2 and maze[cur][1] == 1: c += 1
             if cur == end[0] + 1j*end[1] and c == cheese: minStep = step          
