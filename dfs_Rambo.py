@@ -9,7 +9,7 @@ turn_left(k), turn_right(k)是旋转k*90度; 房间里可能有障碍物，机�
 '''
 import copy
 class Robot(object):
-    mov_d = {0: (1, 0), 1: (0, 1), 2: (-1, 0), 3: (0, -1)}
+    mov_d = {0: (0, 1), 1: (1, 0), 2: (0, -1), 3: (-1, 0)}
     
     def __init__(self, x, y, dir):
         self.x = x
@@ -24,13 +24,8 @@ class Robot(object):
         self.dir = (self.dir - k) % 4
     def clean(self):
         print("clean ({}, {})".format(self.x, self.y))
-    
-    def try_mov(self, d): # d: 'forward': 0, 'left': -1, 'right': 1
-        dummy = copy.copy(self)
-        dummy.mov_dir(d)
-        return (dummy.x, dummy.y)
 
-    def mov_dir(self, d): # d: 'forward': 0, 'left': -1, 'right': 1       
+    def mov_dir(self, d): # d: 'forward': 0, 'left': -1, 'right': 1    
         if d == 0:
             self.mov()
         elif d == -1:
@@ -62,20 +57,29 @@ class Solution(object):
         self.robot = robot
         self.room = room
         self.visited = set()
+        self.cleanable = len([ 1 for i in range(len(room)) for j in range(len(room[0])) if room[i][j] == 0 ])
         self.dfs()
+        if len(self.visited) == self.cleanable:
+            print("Successfully clean the room")
+        else:
+            self.robot.turn_right(1)
+            self.robotClean(self.robot, self.room)
+       
+
 
     def dfs(self):
-        if len(self.visited) == len([ 1 for i in range(room) for j in range(room[0]) if room[i][j] == 0 ]):
-            return "Successfully clean the room"
-        self.robot.clean()
-        self.visited.add((self.robot.x, self.robot.y))
-        
-        for d in [-1, 0, 1]:
-            (nx, ny) = self.robot.try_mov(d)
-            if 0 <= nx < len(room) and 0 <= ny < len(room[0]) and room[nx][ny] == 0:
+        if 0 <= self.robot.x < len(room) and 0 <= self.robot.y < len(room[0]) and room[self.robot.x][self.robot.y] == 0:
+            self.robot.clean()
+            self.visited.add((self.robot.x, self.robot.y))
+            if len(self.visited) == self.cleanable:
+                return
+            
+            for d in [-1, 0, 1]:
                 self.robot.mov_dir(d)
+                print("move to ({}, {}, {})".format(self.robot.x, self.robot.y, self.robot.dir))
                 self.dfs()
                 self.robot.back_from(d)
+                print("back to ({}, {}, {})".format(self.robot.x, self.robot.y, self.robot.dir))
 
       
 
@@ -85,9 +89,9 @@ room = [
 [1, 0, 1, 1],
 [1, 0, 1, 1]
 ]
-robot = Robot(0, 0, 0)
+robot = Robot(0, 2, 0)
 s = Solution()
-print(s.robotClean(robot, room))
+s.robotClean(robot, room)
 
         
 
