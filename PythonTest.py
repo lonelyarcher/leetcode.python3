@@ -61,3 +61,7 @@ list1 = [1,2,3]
 print(type(list1[-1]))
 
 print(1+1j*1 == 1+1j**1)
+
+ll = [1,2,3]
+ll.clear()
+print(ll)

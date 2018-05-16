@@ -8,7 +8,6 @@ turn_left(k), turn_right(k)是旋转k*90度; 房间里可能有障碍物，机�
 单独写。这样的话，题目本身其实就是一个dfs遍历matrix的题目了。
 # move(), turn_left(k), turn_right(k), clean()
 '''
-import copy
 class Robot(object):
     
     '''
