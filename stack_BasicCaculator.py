@@ -14,11 +14,34 @@ class Solution(object):
         :type s: str
         :rtype: ints
         """
+        s = s + "#"
         num, nums, ops = 0, [0], []
-        s = s + '#'
+        def calc_one():
+            y, x, op = nums.pop(), nums.pop(), ops.pop()
+            nums.append(eval(str(x)+op+str(y)))
         for i in range(len(s)):
             if s[i] in '1234567890':
                 num = num * 10 + int(s[i])
             else:
-                if i > 0 and s[i-1] not in '+-/*()':
+                if i > 0 and s[i-1] in '123456789':
                     nums.append(num)
+                    num = 0
+                if s[i] == ')':
+                    while ops[-1] != '(': calc_one()
+                    ops.pop()
+                elif ops and (s[i] in '+-' or ops[-1] in '*/'):
+                    calc_one()
+                    ops.append(s[i])
+                elif s[i] != '#': ops.append(s[i])
+            print("nums ", nums)
+            print("ops ", ops)
+        while ops: calc_one()
+        return nums[-1]
+
+# test
+print(eval("1+1-1"))
+so = Solution()
+ans = so.calculate('1-1+1')
+print(ans)
+ans = so.calculate('1+4*(2-3)+(4/2+1)')
+print(ans)
