@@ -14,32 +14,37 @@ class Solution(object):
         :type s: str
         :rtype: ints
         """
-        s = s + "#"
+        s = s + "#"  # add the fake end to finish last number
         num, nums, ops = 0, [0], []
+        
         def calc_one():
             y, x, op = nums.pop(), nums.pop(), ops.pop()
-            nums.append(eval(str(x)+op+str(y)))
+            if op == '+': nums.append(x + y)
+            elif op == '-': nums.append(x - y)
+            elif op == '*': nums.append(x * y)
+            else: nums.append(x // y)
+
         for i in range(len(s)):
-            if s[i] in '1234567890':
+            if s[i] in '1234567890':                    # is number
                 num = num * 10 + int(s[i])
             else:
-                if i > 0 and s[i-1] in '123456789':
+                if i > 0 and s[i-1] in '123456789':     # end of numbers
                     nums.append(num)
                     num = 0
-                if s[i] == ')':
+                if s[i] == ')':                         # is (
                     while ops[-1] != '(': calc_one()
                     ops.pop()
-                elif ops and (s[i] in '+-' or ops[-1] in '*/'):
-                    calc_one()
+                elif s[i] == '(': ops.append(s[i])      # is )
+                elif s[i] in '+-*/':                    # is +-/*
+                    if ops and ((s[i] in '+-' and ops[-1] in '+-') or ops[-1] in '*/'):
+                        calc_one()
                     ops.append(s[i])
-                elif s[i] != '#': ops.append(s[i])
-            print("nums ", nums)
-            print("ops ", ops)
-        while ops: calc_one()
+                # else is #, do nothing
+        while ops: 
+            calc_one()
         return nums[-1]
 
 # test
-print(eval("1+1-1"))
 so = Solution()
 ans = so.calculate('1-1+1')
 print(ans)
