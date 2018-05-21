@@ -8,13 +8,17 @@ You may assume that the given expression is always valid.
 nums中只剩数字，ops中只剩+ or -。一个一个op地pop出来，然后算好push回去就
 行了。
 '''
+# two stack for +-*/(), one stack for +-*/
+# always handle the if digit, then else first handle get number for digit end.
+# then anything else like ()+-/*, ( for push the operator to the stack, ) pop
+
 class Solution(object):
     def calculate(self, s):
         """
         :type s: str
         :rtype: ints
         """
-        s = s + "#"  # add the fake end to finish last number
+        s = s + " "  # add the fake end to finish last number
         num, nums, ops = 0, [0], []
         
         def calc_one():
