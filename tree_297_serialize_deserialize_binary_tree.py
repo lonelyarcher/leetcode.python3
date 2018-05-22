@@ -28,13 +28,8 @@ class TreeNode(object):
 
 class Codec:    
     def serialize(self, root):
-        if not root: return '# '
-        res = ''
-        if root:
-            res += str(root.val) + ' '
-            res += self.serialize(root.left)
-            res += self.serialize(root.right)
-        return res
+        if not root: return '#'
+        return str(root.val) + ' ' + self.serialize(root.left) + ' ' + self.serialize(root.right)
 
     def deserialize(self, data):
         data = data.split()
