@@ -53,8 +53,7 @@ for i in it3:
     print(i)
 
 it3 = itertools.chain([1,1,1], [2,3,4])
-for i in it3:
-    print(i)
+print(','.joint(it3))
 
 print(type(it))
 list1 = [1,2,3]

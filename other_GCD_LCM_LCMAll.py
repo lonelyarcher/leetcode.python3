@@ -1,12 +1,12 @@
+def lcm(x, y):
+    return x * y / gcd(x, y)
+
 def gcd(x, y):
     r = x % y
     if r:
         return gcd(y, r)
     else:
         return y
-
-def lcm(x, y):
-    return x * y / gcd(x, y)
 
 import functools
 def lcmAll(sequence):
