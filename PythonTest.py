@@ -50,17 +50,22 @@ it2 = iter([4,5,6])
 
 it3 = itertools.chain(it, it2)
 for i in it3:
-    print(i)
+    print("it3 = " + str(i))
 
 it3 = itertools.chain([1,1,1], [2,3,4])
-print(','.joint(it3))
+#print(','.join(it3))
 
 print(type(it))
 list1 = [1,2,3]
 print(type(list1[-1]))
 
-print(1+1j*1 == 1+1j**1)
+print(1+1j*1 == 1+1j)
 
 ll = [1,2,3]
 ll.clear()
 print(ll)
+
+from collections import Counter
+counter = Counter()
+print(counter['w']) #counter allow non existing key, return default 0
+

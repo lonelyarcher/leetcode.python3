@@ -35,16 +35,12 @@ Constraints:
 from typing import List
 class Solution:
     def closedIsland(self, grid: List[List[int]]) -> int:
-        dir = [[1, 0], [0, 1], [-1, 0], [0, -1]]
         n, m = len(grid), len(grid[0])
         def dfs(i, j):
+            if i < 0 or i >= n or j < 0 or j >= m: return False
+            if grid[i][j]: return True
             grid[i][j] = 1
-            ans = True
-            for dx, dy in dir:
-                ni, nj = i + dx, j + dy
-                if ni < 0 or ni >= n or nj < 0 or nj >= m: ans = False
-                elif grid[ni][nj] == 0 and not dfs(i + dx, j + dy): ans = False  
-            return ans
+            return dfs(i + 1, j) & dfs(i - 1, j) & dfs(i, j + 1) & dfs(i, j - 1) # why &, not 'and', because and will skip the dfs after if false
         return sum(dfs(i, j) for i in range(n) for j in range(m) if grid[i][j] == 0)
 
 grid = [[0,0,1,1,0,1,0,0,1,0],
