@@ -9,7 +9,7 @@ class Solution():
                 res[i + j + 1] += res[i + j] // 10 # no need to consider i+j+1 will overflow, because if will be considered later 
                 res[i + j] = res[i + j] % 10
         while len(res) > 1 and res[-1] == 0: res.pop() 
-        return "".join([str(i) for i in res])[::-1].lstrip("0")
+        return "".join(str(i) for i in res)[::-1].lstrip("0")
 #test
 print(Solution().multiply("77","99"))
 # remove by value, 

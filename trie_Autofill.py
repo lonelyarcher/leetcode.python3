@@ -34,7 +34,7 @@ class Solution():
 #test
 words = ['app', 'apple', 'application', 'appeal', 'ape', 'approve', 'apply', 'applicant', 'age', 'add', 'average', 'boy', 'bat']
 s = Solution(words)
-# first we get suggestuon for prefix ap
+# first we get suggestion for prefix ap
 print(s.get_words('ap'))
 # then we get suggestion for prefix b
 print(s.get_words('b'))
