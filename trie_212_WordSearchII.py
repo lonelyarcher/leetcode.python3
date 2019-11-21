@@ -29,7 +29,8 @@ class Solution:
         :type words: List[str]
         :rtype: List[str]
         """
-        
+        if len(board) == 0: return []
+        m, n = len(board), len(board[0])
         root = {}
         for w in words:
             cur = root
@@ -39,26 +40,26 @@ class Solution:
 
         #convert 2 dimension array to dict key as complex number
         #Python 2.7+ Dict Comprehensions
-        nBoard = {
-            i + j*1j: board[i][j]
-            for i in range(len(board))
-            for j in range(len(board[i]))
-        }
-
+        dir = [[1, 0], [0, 1], [-1, 0], [0, -1]]
         res = []
-
         def search(cur, p, path):
+            i, j = p
             if cur.pop('isWord', False):
                 res.append(path)
-            c = nBoard.get(p)
+            c = board[i][j]
             if c in cur:
-                nBoard[p] = None
-                for k in range(4):
-                    search(cur[c], p + 1j**k, path + c) #move the p 1 step to left, right, up and down
-                nBoard[p] = c
+                board[i][j] = None
+                for d in dir:
+                    ni, nj = i + d[0], j + d[1]
+                    if ni >= 0 and ni < m and nj >= j and nj < n: 
+                        if c not in cur:
+                            print(c)
+                        search(cur[c], (ni, nj), path + c) #move the p 1 step to left, right, up and down
+                board[i][j] = c
 
-        for p in nBoard:
-            search(root, p, '')
+        for i in range(m):
+            for j in range(n):
+                search(root, (i, j), '')
         return res
 
         
