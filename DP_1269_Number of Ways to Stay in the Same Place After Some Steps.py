@@ -39,7 +39,7 @@ class Solution:
         state: i for step, j for position of arr
         dp[i][j] = dp[i - 1][j] + dp[i - 1][j + 1] + dp[i - 1][j - 1]
         rolling array can optimize the space to dp[j]
-        but in this question arrlen=10^6 >> steps=500, to optimization: the value of dp[0] is only related to 1 if step 1, 2 if step 2, 3 if step 3
+        but in this question arrlen=10^6 >> steps=500, to optimization: the value of dp[0] is only related to 1 if step 0, 2 if step 1, 3 if step 3
         n if step n
         so if arrlen >> step, we only care about the step length of arr
         """
