@@ -14,11 +14,11 @@ class NumMatrix:
         self.matrix = matrix
         self.m = len(matrix)
         self.n = 0 if self.m == 0 else len(matrix[0])
-        self.bit = [[0 for j in range(self.n + 1)] for i in range(self.m + 1)]
+        self.bit = [[0] * (self.n + 1) for i in range(self.m + 1)]
         for i in range(self.m):
             for j in range(self.n):
                 self.updateBit(i + 1, j + 1, self.matrix[i][j])
-        #print("\n".join(f'[{",".join(str(self.bit[i][j]) for j in range(self.n + 1))}]' for i in range(self.m + 1)))
+        print("\n".join(f'[{",".join(str(self.bit[i][j]) for j in range(self.n + 1))}]' for i in range(self.m + 1)))
     
     def update(self, row: int, col: int, val: int) -> None:
         

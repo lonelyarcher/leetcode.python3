@@ -34,7 +34,7 @@ t1&t2 : Counter({'c': 2, 'a': 2, 'e': 2, 'b': 2, 'd': 1}) """
 # | Union, keep the maximum counts
 """ t1 : Counter({'b': 4, 'e': 4, 'a': 3, 'c': 2, 'd': 1})
 t2 : Counter({'c': 4, 'd': 3, 'a': 2, 'b': 2, 'e': 2})
-t1|t2 : Counter({'b': 4, 'e': 4, 'c': 4, 'a': 3, 'd': 3}) """
+t1|t2 : Counter({'b': 4, 'e': 4, 'c': 4, 'a': 3, 'd': 3}) """ 
 # Intersections: &, keep only the min counts
 """ t1 : Counter({'e': 4, 'b': 4, 'a': 3, 'c': 2, 'd': 1})
 t2 : Counter({'c': 4, 'd': 3, 'a': 2, 'e': 2, 'b': 2})

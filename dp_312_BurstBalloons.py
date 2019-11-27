@@ -16,6 +16,7 @@ coins = 3*1*5 + 3*5*8 + 1*3*8 + 1*8*1 = 167
 # the right part are from [8, 1], so it could break down to two part with the edge balloon not bursted, good for dp
 # dp[i, j] = max(nums[i]*nums[j]*nums[k] + dp[i,k] + dp[k, j] for k in [i+1,...,j-1]) 
 # k can only be middle elements excluding left and right edges i, j
+import functools
 class Solution:
     def maxCoins(self, nums):
         """
@@ -23,12 +24,10 @@ class Solution:
         :rtype: int
         """
         nums = [1] + nums + [1]
-        memo = {}
+        @functools.lru_cache(None)
         def helper(i, j):
-            if (i, j) in memo: 
-                return memo[(i, j)]
-            memo[(i, j)] = max( [ helper(i, k) + nums[i] * nums[k] * nums[j] + helper(k, j) for k in range(i + 1, j)], default=0 )
-            return memo[i, j]
+            if i + 1 >= j: return 0
+            return max(helper(i, k) + nums[i] * nums[k] * nums[j] + helper(k, j) for k in range(i + 1, j))
         return helper(0, len(nums) - 1)
 
-print(Solution().maxCoins([3, 1, 5, 8]))
+print(Solution().maxCoins([3, 1, 5, 8])) #167
