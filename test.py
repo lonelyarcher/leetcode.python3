@@ -4,7 +4,7 @@ import collections
 from typing import List
 x = 3 and 1 # and first judge if the first argument is None, '' or 0, if yes then return it, if not return the second argument
 
-print(f'template is {x == 3} or x = {x}')
+print(f'template is {x==3} or x = {x}')
 
 a = [[0, 1], [1, 3]]
 b = [[2, 4]]
@@ -17,13 +17,13 @@ dict = {None: 2}
 
 def f1(x):
     if x:
-        print("f1: " + str(x))
+        print(f"f1: {str(x)}")
         f2(x+1)
 
 x = 2
 
 def f2(x):
-    print("f2: " + str(x))
+    print(f"f2: {str(x)}")
 
 f1(5) # works because python define functions regardless of the order
 
