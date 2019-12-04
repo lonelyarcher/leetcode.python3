@@ -50,3 +50,7 @@ heapq.heappush(heap, 0)
 heapq.heappop(heap)
 heapq.heappushpop(heap, 5)
 
+print(" ".join([str(i) for i in range(10)]))
+
+
+
