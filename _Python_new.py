@@ -50,7 +50,23 @@ heapq.heappush(heap, 0)
 heapq.heappop(heap)
 heapq.heappushpop(heap, 5)
 
+# Python string and number are not auto-boxing, make sure to convert to correct type
 print(" ".join([str(i) for i in range(10)]))
+
+# expression assignment, 
+# 1. while loop while x := read(file): print(x)
+# 2. boolean complex expression, 
+if (x:=1) == 1 and x > 0: print(x) 
+# 3. list [x:=1, x + 1] = [1, 2]
+
+class AA(object):
+    def __getitem__(self, arg):
+        return arg
+obj = AA()
+obj.a = 1
+print(obj['a'])
+print(obj.a)
+
 
 
 
