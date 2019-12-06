@@ -21,7 +21,7 @@ Output: "firstsecondthird"
 Explanation: The input [1,3,2] means thread A calls first(), thread B calls third(), and thread C calls second(). "firstsecondthird" is the correct output. """
 
 from threading import Event
-class Foo_Event:
+class Foo_Event: # event isSet() return the internal flag, set() to internal flag True, clear() to False, wait() block until the internal flag to true, the return is the internal flag.
     def __init__(self):
         self.e2 = Event()
         self.e3 = Event()
@@ -49,15 +49,15 @@ from threading import Lock
 class Foo_Lock:
     def __init__(self):
         self.l2 = Lock()
-        l2.acquire()
+        self.l2.acquire() # lock acquire will try to locks the lock and BLOCK until other thread release() it if locked, then it locks the lock again and return True.
         self.l3 = Lock()
-        l3.acquire() 
+        self.l3.acquire() 
 
     def first(self, printFirst: 'Callable[[], None]') -> None:
         
         # printFirst() outputs "first". Do not change or remove this line.
         printFirst()
-        l2.release()
+        self.l2.release() # of course, one thread can release the lock which it doesn't acquire
 
 
     def second(self, printSecond: 'Callable[[], None]') -> None:
