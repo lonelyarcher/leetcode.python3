@@ -93,16 +93,16 @@ class HtmlParser(object):
 #        """
 import re
 from typing import List
-from queue import Queue 
+from queue import Queue
 from threading import Lock
-from concurrent.futures import ThreadPoolExecutor, as_completed, wait
+from concurrent.futures import ThreadPoolExecutor
 
 """ 
 
 First by ThreadPoolExecutor, you can use multiple threads to crawl the Queue (thread safe, blocking)
 Also you need to record the visited url to avoid repeat
 """
-class Solution:
+class Solution_BFS_QueueAndLockOnSet:
     def __init__(self):
         self.queue = Queue()
         self.visited = set()
@@ -122,12 +122,45 @@ class Solution:
          while True:
             url = self.queue.get(timeout=0.1) # if timeout 100ms, then break the loop by raise a empty error 
             urls = getUrl(url)
+            with self.lock:
+                for u in urls:
+                    if u.startswith(self.hostname) and u not in self.visited:
+                        self.visited.add(u)
+                        self.queue.put(u)
+
+import re
+from typing import List
+from collections import deque
+from threading import Lock
+from concurrent.futures import ThreadPoolExecutor
+# Lock only to implement unbound bloking queue and concurrent set
+class Solution:
+    def __init__(self):
+        self.queue = deque()
+        self.visited = set()
+        self.deq, self.lock = Lock(), Lock()
+
+    def crawl(self, startUrl: str, htmlParser: 'HtmlParser') -> List[str]:
+        self.hostname = re.search('(http://.*?)(/.*)|$', startUrl).group(1)
+        print(self.hostname)
+        self.visited.add(startUrl)
+        self.queue.append(startUrl)
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            for _ in range(10):
+                executor.submit(self.process, htmlParser.getUrls)
+        return list(self.visited)
+
+    def process(self, getUrl):
+         while True:
+            self.deq.acquire(timeout=0.1) #(timeout=0.1) # if timeout 100ms, then break the loop by raise a empty error 
+            url = self.queue.popleft() 
+            if len(self.queue): self.deq.release()
+            urls = getUrl(url)
             for u in urls:
-                if u.startswith(self.hostname) and u not in self.visited:
-                    self.visited.add(u)
-                    self.queue.put(u)
-
-
-
+                with self.lock:
+                    if u.startswith(self.hostname) and u not in self.visited:
+                        self.visited.add(u)
+                        self.queue.append(u)
+                        if self.deq.locked(): self.deq.release()
 
 print(Solution().crawl("http://news.yahoo.com/xx/uuu", HtmlParser())) 

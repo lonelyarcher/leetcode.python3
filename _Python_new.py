@@ -71,6 +71,11 @@ print(obj.a)
 1. Methods forget self. 
 2. variable name coincide with existing/system function name.  """
 
-
+import collections
+queue = collections.deque
+if queue:
+    print('empty queue is true')
+else:
+    print('empty deque is false')
 
 
