@@ -6,6 +6,6 @@
     "python.testing.nosetestsEnabled": false,
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
-    "python.pythonPath": "C:\\Users\\mexu\\AppData\\Local\\Programs\\Python\\Python38-32\\python.exe",
+    "python.pythonPath": "C:\\Users\\meng_\\AppData\\Local\\Programs\\Python\\Python38-32\\python.exe",
     "python.terminal.activateEnvironment": false
 }

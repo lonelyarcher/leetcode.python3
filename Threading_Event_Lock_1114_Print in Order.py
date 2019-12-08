@@ -20,8 +20,15 @@ Input: [1,3,2]
 Output: "firstsecondthird"
 Explanation: The input [1,3,2] means thread A calls first(), thread B calls third(), and thread C calls second(). "firstsecondthird" is the correct output. """
 
+
+""" Event: to control block or allow on other thread waiting on event. Only block or allow to go two conditions.
+ isSet() return the internal flag, 
+ set() to internal flag True, 
+ clear() to set internal flag to False
+ wait() block until the internal flag to true, the return is the internal flag.
+ """
 from threading import Event
-class Foo_Event: # event isSet() return the internal flag, set() to internal flag True, clear() to False, wait() block until the internal flag to true, the return is the internal flag.
+class Foo_Event: 
     def __init__(self):
         self.e2 = Event()
         self.e3 = Event()
@@ -43,6 +50,8 @@ class Foo_Event: # event isSet() return the internal flag, set() to internal fla
     def third(self, printThird: 'Callable[[], None]') -> None:
         self.e3.wait()
         printThird()
+
+
 
 
 from threading import Lock

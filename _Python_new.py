@@ -67,6 +67,10 @@ obj.a = 1
 print(obj['a'])
 print(obj.a)
 
+""" Python mistakes: 
+1. Methods forget self. 
+2. variable name coincide with existing/system function name.  """
+
 
 
 
