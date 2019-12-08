@@ -27,7 +27,8 @@ Below are two examples explaining the functionality of the problem, for custom t
 
 Follow up:
 
-Assume we have 10,000 nodes and 1 billion URLs to crawl. We will deploy the same software onto each node. The software can know about all the nodes. We have to minimize communication between machines and make sure each node does equal amount of work. How would your web crawler design change?
+Assume we have 10,000 nodes and 1 billion URLs to crawl. We will deploy the same software onto each node. The software can know about all the nodes. 
+We have to minimize communication between machines and make sure each node does equal amount of work. How would your web crawler design change?
 What if one node fails or does not work?
 How do you know when the crawler is done?
  
@@ -83,12 +84,50 @@ You may assume there're no duplicates in url library. """
 # This is HtmlParser's API interface.
 # You should not implement it, or speculate about its implementation
 # """
-#class HtmlParser(object):
-#    def getUrls(self, url):
+class HtmlParser(object):
+    def getUrls(self, url):
+        return ["http://news.yahoo.com/news", "http://news.yahoo.com/"]
 #        """
 #        :type url: str
 #        :rtype List[str]
 #        """
+import re
+from typing import List
+from queue import Queue 
+from threading import Lock
+from concurrent.futures import ThreadPoolExecutor, as_completed, wait
 
+""" 
+
+First by ThreadPoolExecutor, you can use multiple threads to crawl the Queue (thread safe, blocking)
+Also you need to record the visited url to avoid repeat
+"""
 class Solution:
+    def __init__(self):
+        self.queue = Queue()
+        self.visited = set()
+        self.lock = Lock()
+
     def crawl(self, startUrl: str, htmlParser: 'HtmlParser') -> List[str]:
+        self.hostname = re.search('(http://.*?)(/.*)|$', startUrl).group(1)
+        print(self.hostname)
+        self.visited.add(startUrl)
+        self.queue.put_nowait(startUrl)
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            for _ in range(10):
+                executor.submit(self.process, htmlParser.getUrls)
+        return list(self.visited)
+
+    def process(self, getUrl):
+         while True:
+            url = self.queue.get(timeout=0.1) # if timeout 100ms, then break the loop by raise a empty error 
+            urls = getUrl(url)
+            for u in urls:
+                if u.startswith(self.hostname) and u not in self.visited:
+                    self.visited.add(u)
+                    self.queue.put(u)
+
+
+
+
+print(Solution().crawl("http://news.yahoo.com/xx/uuu", HtmlParser())) 
