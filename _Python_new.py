@@ -69,7 +69,9 @@ print(obj.a)
 
 """ Python mistakes: 
 1. Methods forget self. 
-2. variable name coincide with existing/system function name.  """
+2. variable name coincide with existing/system function name. 
+3. generator and iterator can only iterate once
+ """
 
 import collections
 queue = collections.deque
