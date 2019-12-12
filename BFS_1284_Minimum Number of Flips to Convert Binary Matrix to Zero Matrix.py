@@ -45,9 +45,40 @@ class Solution:
             step += 1
         return -1
 
+#directly use str(list) as key in set()
+    def minFlips_2(self, mat: List[List[int]]) -> int:
+        m, n = len(mat), len(mat[0])
+        q = deque([mat])
+        seen = {str(mat)}
+        step = 0
+        def flip(A, i, j):
+            for ni, nj in (i, j), (i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1):
+                if 0 <= ni < m and 0 <= nj < n: 
+                    A[ni][nj] ^= 1
+        while q:
+            l = len(q)
+            for _ in range(l):
+                s = q.popleft()
+                if all(not any(r) for r in s): return step
+                for i in range(m):
+                    for j in range(n):
+                        flip(s, i, j)
+                        if str(s) not in seen:
+                            q.append([row[:] for row in s])
+                            seen.add(str(s))
+                        flip(s, i, j)
+
+            step += 1
+        return -1
+
         
 print(Solution().minFlips([[1,0,0],[1,0,0]])) #-1
 print(Solution().minFlips([[1,1,1],[1,0,1],[0,0,0]])) #6
 print(Solution().minFlips([[0,0],[0,1]])) #3
 print(Solution().minFlips([[0]])) #0
+
+print(Solution().minFlips_2([[1,0,0],[1,0,0]])) #-1
+print(Solution().minFlips_2([[1,1,1],[1,0,1],[0,0,0]])) #6
+print(Solution().minFlips_2([[0,0],[0,1]])) #3
+print(Solution().minFlips_2([[0]])) #0
 
