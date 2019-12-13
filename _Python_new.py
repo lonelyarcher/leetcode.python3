@@ -19,6 +19,7 @@ print("abcd" is "abcd") #True
 
 # Python operations on set
 # union:| intersections: & difference from first to the seconde: -, ^ symmetric difference
+# set add() update() remove(), list append() extend() pop() remove()
 A = {0, 2, 4, 6, 8}
 B = {1, 2, 3, 4, 5}
 print(A | B == {0, 1, 2, 3, 4, 5, 6, 8}) #True
