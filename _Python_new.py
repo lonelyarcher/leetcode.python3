@@ -81,4 +81,12 @@ if queue:
 else:
     print('empty deque is false')
 
+arr = [0] * 2 # python [] will raise outOfIndex error when access unassigned list index
+arr[1] = "a"
+print(arr)
+
+str1 = sorted("abcd")
+str1[:] = str1[::-1] #slice assignment, it alter the array in place.  not like the slicing which return a copy a = b[:]
+print(str1)
+
 

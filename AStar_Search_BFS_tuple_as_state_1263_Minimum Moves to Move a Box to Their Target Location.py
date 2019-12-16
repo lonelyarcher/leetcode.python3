@@ -67,83 +67,48 @@ we can save state as (box, person)
 each time, we dfs s to find out a set of pos the person can reach, and do standard BFS on state until the box == target
 """
 from typing import List
-import collections
-class Solution: # BFS + BFS
+import collections, heapq
+class Solution: #BFS on find man canReach(), BFS + A* search on (heuristic(manhatton distance) + cost, cost, box, man) into a heap cost is step
     def minPushBox(self, grid: List[List[str]]) -> int:
         m, n = len(grid), len(grid[0])
         dir = [[1, 0], [0, 1], [-1, 0], [0, -1]]
-        moved = set()
         def valid(p):
             return 0 <= p[0] < m and 0 <= p[1] < n and grid[p[0]][p[1]] != '#'
-        def canReach(person, target, box):
-            if person == target: return True
-            seen = {person}
-            queue = collections.deque([person])
+        def canReach(man, push, box): # comparing with dfs, bfs is fast in small matrix, but dfs is shorter more preferred in interview.
+            if man == push: return True
+            seen = {man}
+            queue = collections.deque([man])
             while queue:
                 p = queue.popleft()
                 for d in dir:
                     np = p[0] + d[0], p[1] + d[1]
                     if valid(np) and np != box and np not in seen:
-                        if np == target: return True
+                        if np == push: return True
                         seen.add(np)
                         queue.append(np)
             return False
         for i in range(m):
             for j in range(n):
-                if grid[i][j] == 'S': person = i, j
-                elif grid[i][j] == 'B': box = i, j
-                elif grid[i][j] == 'T': target = i, j
-        queue = collections.deque([(box, person)])
-        moved.add((box, person))
-        step = 0
-        while queue:
-            for p in range(len(queue)):
-                box, person = queue.popleft()
-                if box == target: return step
-                for d in dir: 
-                    ob = box[0] - d[0], box[1] - d[1]
-                    nb = box[0] + d[0], box[1] + d[1]
-                    if valid(ob) and canReach(person, ob, box) and valid(nb) and (nb, ob) not in moved:
-                        moved.add((nb, ob))
-                        queue.append((nb, ob))
-            step += 1
-        return -1
-
-
-class Solution2: #BFS + DFS
-    def minPushBox(self, grid: List[List[str]]) -> int:
-        m, n = len(grid), len(grid[0])
-        dir = [[1, 0], [0, 1], [-1, 0], [0, -1]]
-        moved = set()
-        def valid(p):
-            return 0 <= p[0] < m and 0 <= p[1] < n and grid[p[0]][p[1]] != '#'
-        def dfs(p, seen, box):
-            seen.add(p)
-            for d in dir:
-                np = p[0] + d[0], p[1] + d[1]
-                if valid(np) and np != box and np not in seen:
-                    dfs(np, seen, box)
-        for i in range(m):
-            for j in range(n):
                 if grid[i][j] == 'S': man = i, j
                 elif grid[i][j] == 'B': box = i, j
                 elif grid[i][j] == 'T': target = i, j
-        queue = [(box, man)]
-        moved.add((box, man))
+        def md(box): # Manhatton distance
+            return abs(target[0] - box[0]) + abs(target[1] - box[1])
+        heap = [(md(box), 0, box, man)]
+        heapq.heapify(heap)
+        moved= {(box, man)}
         step = 0
-        while (len(queue)):
-            for p in range(len(queue)):
-                box, man = queue.pop(0)
-                if box == target: return step
-                seen = set()
-                dfs(man, seen, box)
-                for d in dir: 
-                    op = box[0] - d[0], box[1] - d[1]
-                    np = box[0] + d[0], box[1] + d[1]
-                    if valid(op) and op in seen and valid(np) and (np, op) not in moved:
-                        moved.add((np, op))
-                        queue.append((np, op))
-            step += 1
+        while (len(heap)):
+            h, step, box, man = heapq.heappop(heap)
+            for d in dir: 
+                push = box[0] - d[0], box[1] - d[1]
+                np = box[0] + d[0], box[1] + d[1]
+                # here canReach may be call 4 times BFS in one while iteration, you can do one full dfs/bfs to find all reachable positions
+                # but in this question, it took long time, since most likely the next push position is very close to man position, do 4 times bfs is fastest way
+                if valid(push) and canReach(man, push, box) and valid(np) and (np, box) not in moved:
+                    if np == target: return step + 1
+                    moved.add((np, box))
+                    heapq.heappush(heap, (step + 1 + md(np), step + 1, np, box))
         return -1
 
 grid = [["#","#","#","#","#","#"],
@@ -152,7 +117,7 @@ grid = [["#","#","#","#","#","#"],
         ["#",".","#","#",".","#"],
         ["#",".",".",".","S","#"],
         ["#","#","#","#","#","#"]]
-print(Solution2().minPushBox(grid)) #3
+print(Solution().minPushBox(grid)) #3
 
 grid = [["#","#","#","#","#","#"],
         ["#","T","#","#","#","#"],
@@ -160,7 +125,7 @@ grid = [["#","#","#","#","#","#"],
         ["#","#","#","#",".","#"],
         ["#",".",".",".","S","#"],
         ["#","#","#","#","#","#"]]
-print(Solution2().minPushBox(grid)) #-1
+print(Solution().minPushBox(grid)) #-1
 
 grid = [["#","#","#","#","#","#"],
         ["#","T",".",".","#","#"],
@@ -168,12 +133,12 @@ grid = [["#","#","#","#","#","#"],
         ["#",".",".",".",".","#"],
         ["#",".",".",".","S","#"],
         ["#","#","#","#","#","#"]]
-print(Solution2().minPushBox(grid)) #5       
+print(Solution().minPushBox(grid)) #5       
 
 grid = [["#","#","#","#","#","#","#"],
         ["#","S","#",".","B","T","#"],
         ["#","#","#","#","#","#","#"]]
-print(Solution2().minPushBox(grid)) #-1
+print(Solution().minPushBox(grid)) #-1
                         
 
 
