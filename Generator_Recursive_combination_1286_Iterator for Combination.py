@@ -32,13 +32,14 @@ class CombinationIterator:
 class CombinationIterator2:
     def __init__(self, cs: str, cl: int):
         def dfs (s, cl): # combination 
-            if cl == len(s): yield "".join(s)
-            if cl == 0: yield ""
-            for j in range(i, len(cs)):
-                path.append(cs[j])
-                yield from dfs(path, j + 1) # delegate its operations to subgenerator, then the recursion will yield too
-                path.pop()
-        self.gen = dfs([], 0)
+            if cl == len(s): yield s
+            elif cl == 0: yield ""
+            elif len(s) > cl:
+                for tail in dfs(s[1:], cl - 1):
+                    yield s[0] + tail
+                for tail in dfs(s[1:], cl):
+                    yield tail
+        self.gen = dfs(cs, cl)
         self.buffer = next(self.gen)
     
     def next(self) -> str:
@@ -50,7 +51,7 @@ class CombinationIterator2:
         return self.buffer is not None
         
 
-iterator = CombinationIterator("abc", 2) # creates the iterator.
+iterator = CombinationIterator2("abc", 2) # creates the iterator.
 
 print(iterator.next()) # returns "ab"
 print(iterator.hasNext()) # returns true

@@ -109,7 +109,7 @@ class Solution_BFS_QueueAndLockOnSet:
         self.lock = Lock()
 
     def crawl(self, startUrl: str, htmlParser: 'HtmlParser') -> List[str]:
-        self.hostname = re.search('(http://.*?)(/.*)|$', startUrl).group(1)
+        self.hostname = startUrl.split("/")[2]; #re.search('(http://.*?)(/.*)|$', startUrl).group(1)
         print(self.hostname)
         self.visited.add(startUrl)
         self.queue.put_nowait(startUrl)
