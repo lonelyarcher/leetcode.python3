@@ -68,8 +68,8 @@ class Solution2:
         for i in range(1, m + 1):
             for j in range(1, n + 1):
                 presum[i][j] = presum[i - 1][j] + presum[i][j - 1] + mat[i - 1][j - 1] - presum[i - 1][j - 1]
-                if s <= i and s <= j and presum[i][j] - presum[i - s][j] - presum[i][j - s] + presum[i - s][j - s] <= threshold: s += 1
-        return s
+                while s <= min(i, j) and presum[i][j] - presum[i - s][j] - presum[i][j - s] + presum[i - s][j - s] <= threshold: s += 1
+        return s - 1 
        
 
 s = Solution2();

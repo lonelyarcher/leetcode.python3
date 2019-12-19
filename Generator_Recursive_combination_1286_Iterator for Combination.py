@@ -49,6 +49,20 @@ class CombinationIterator2:
         
     def hasNext(self) -> bool:
         return self.buffer is not None
+
+import itertools
+class CombinationIterator3:
+    def __init__(self, cs: str, cl: int):
+        self.gen = itertools.combinations(cs, cl)
+        self.buffer = next(self.gen)
+    
+    def next(self) -> str:
+        ans = self.buffer
+        self.buffer = next(self.gen, None)
+        return "".join(ans)
+        
+    def hasNext(self) -> bool:
+        return self.buffer is not None
         
 
 iterator = CombinationIterator2("abc", 2) # creates the iterator.
