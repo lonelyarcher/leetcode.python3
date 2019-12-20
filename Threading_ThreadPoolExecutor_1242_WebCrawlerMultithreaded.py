@@ -131,14 +131,14 @@ class Solution_BFS_QueueAndLockOnSet:
 import re
 from typing import List
 from collections import deque
-from threading import Lock
+from threading import Lock, Semaphore
 from concurrent.futures import ThreadPoolExecutor
 # Lock only to implement unbound bloking queue and concurrent set
 class Solution:
     def __init__(self):
         self.queue = deque()
         self.visited = set()
-        self.deq, self.lock = Lock(), Lock()
+        self.deq, self.lock = Semaphore(1), Lock()
 
     def crawl(self, startUrl: str, htmlParser: 'HtmlParser') -> List[str]:
         self.hostname = re.search('(http://.*?)(/.*)|$', startUrl).group(1)
@@ -161,6 +161,6 @@ class Solution:
                     if u.startswith(self.hostname) and u not in self.visited:
                         self.visited.add(u)
                         self.queue.append(u)
-                        if self.deq.locked(): self.deq.release()
+                        self.deq.release()
 
 print(Solution().crawl("http://news.yahoo.com/xx/uuu", HtmlParser())) 
