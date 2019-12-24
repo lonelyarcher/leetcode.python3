@@ -69,3 +69,5 @@ from collections import Counter
 counter = Counter()
 print(counter['w']) #counter allow non existing key, return default 0
 
+print(len(set("aabbc")))
+
