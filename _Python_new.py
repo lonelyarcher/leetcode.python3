@@ -89,4 +89,4 @@ str1 = sorted("abcd")
 str1[:] = str1[::-1] #slice assignment, it alter the array in place.  not like the slicing which return a copy a = b[:]
 print(str1)
 
-
+#list.reverse() return None, if you want to return reversed copy use list[::-1]
