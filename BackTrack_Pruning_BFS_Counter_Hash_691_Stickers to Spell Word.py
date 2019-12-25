@@ -68,13 +68,11 @@ class Solution_DFS:
     def minStickers(self, stickers: List[str], target: str) -> int:
         collections.Counter.__hash__ = lambda self: hash(tuple(sorted(self.items()))) #override __hash__ function of Counter
         t = collections.Counter(target)
-        s = [collections.Counter(sticker) for sticker in stickers]
-
+        s = list(map(collections.Counter, stickers))
         if set(t).difference(*s): return -1 # set difference() = setA - setB, it can accept multiple arguments *
         @functools.lru_cache(None)
         def dfs (t):
-            if not t:  return 0
-            return 1 + min(dfs(t - cnt) for cnt in s if [*t][0] in cnt) #same pruning as BFS
+            return 1 + min(dfs(t - cnt) for cnt in s if [*t][0] in cnt) if t else 0 #same pruning as BFS
         return dfs(t)
 
 s = Solution_DFS()

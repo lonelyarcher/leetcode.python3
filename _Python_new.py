@@ -90,3 +90,9 @@ str1[:] = str1[::-1] #slice assignment, it alter the array in place.  not like t
 print(str1)
 
 #list.reverse() return None, if you want to return reversed copy use list[::-1]
+
+x = y = z = 3
+print(x, y, z)
+
+if (x, y) := (1, 2):
+    print(x, y)
