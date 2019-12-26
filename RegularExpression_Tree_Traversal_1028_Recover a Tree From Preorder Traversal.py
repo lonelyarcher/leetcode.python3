@@ -18,15 +18,36 @@ class TreeNode:
         self.left = None
         self.right = None
     def preorder(self):
-        ans = []
-        def dfs(root):
-            if root: 
-                ans.append(root.val)
-                dfs(root.left)
-                dfs(root.right)
+        ans, st = [], []
+        while self or st:
+            if self:
+                ans.append(self.val)
+                if self.right: st.append(self.right)
+                self = self.left
             else:
-                ans.append("null")
-        dfs(self)
+                self = st.pop()
+        return ans
+    def inorder(self):
+        ans, st = [], []
+        while self or st:
+            if self:
+                st.append(self)
+                self = self.left
+            else:
+                ans.append((p := st.pop()).val)
+                self = p.right
+        return ans
+    def postorder(self):
+        ans, st, pre = [], [], None
+        while self or st:
+            if self:
+                st.append(self)
+                self = self.left
+            else:
+                if not st[-1].right or st[-1].right == pre:
+                    ans.append((pre := st.pop()).val)
+                else:
+                    self = st[-1].right
         return ans
     def levelOrder(self):
         ans = []
@@ -57,7 +78,9 @@ class Solution:
             st.append((node, d))
         return dummy.left
 
-
+print(Solution().recoverFromPreorder("1-2-3").preorder()) #[1,2,3]
+print(Solution().recoverFromPreorder("1-2-3").inorder()) #[2,1,3]
+print(Solution().recoverFromPreorder("1-2-3").postorder()) #[2,3,1]
 
 print(Solution().recoverFromPreorder("1-2--3--4-5--6--7").levelOrder()) #[1,2,5,3,4,6,7]
 print(Solution().recoverFromPreorder("1-2--3---4-5--6---7").levelOrder()) #[1,2,5,3,null,6,null,4,null,7]
