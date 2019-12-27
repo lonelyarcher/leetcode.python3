@@ -29,8 +29,24 @@ def combinations(A, n):
     rec([], 0)
     return ans
 
+def combinations_with_replacement(A, n):
+    ans = []
+    def rec(path, i):
+        if len(path) == n:
+            ans.append(tuple(path))
+        else:
+            for j in range(i, len(A)):
+                path.append(A[j])
+                rec(path, j) # difference, can repeat itself
+                path.pop()
+    rec([], 0)
+    return ans
+
 print(permutations([1, 1, 1]))
 print(list(itertools.permutations([1, 1, 1]))) # include repeat
 
 print(combinations([1, 2, 3, 4, 5], 3))
 print(list(itertools.combinations([1, 2, 3, 4, 5], 3)))
+
+print(combinations_with_replacement([1, 2, 3], 3))
+print(list(itertools.combinations_with_replacement([1, 2, 3], 3)))
