@@ -94,5 +94,8 @@ print(str1)
 x = y = z = 3
 print(x, y, z)
 
-if (x, y) := (1, 2):
-    print(x, y)
+# assignment expr can not assign to tuple in left
+# comparison tuple
+print([4, 2] > [3, 9])
+print(tuple([4, 2]) > (3, 9))
+print((4, 2) > (3, 9))
