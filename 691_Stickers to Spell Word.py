@@ -37,6 +37,11 @@ stickers consists of lowercase English words (without apostrophes).
 target has length in the range [1, 15], and consists of lowercase English letters.
 In all test cases, all words were chosen randomly from the 1000 most common US English words, and the target was chosen as a concatenation of two random words.
 The time limit may be more challenging than usual. It is expected that a 50 sticker test case can be solved within 35ms on average. """
+
+'''
+based on the input size, it should be a search question, but can be optimized by backtracking
+'''
+
 import collections
 from typing import List
 class Solution_ListAsState:
