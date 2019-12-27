@@ -31,11 +31,11 @@ print(A ^ B == {0, 1, 3, 5, 6, 8}) #True
 # - substraction, keep only positive counts
 """ t1 : Counter({'e': 4, 'b': 4, 'a': 3, 'c': 2, 'd': 1})
 t2 : Counter({'c': 4, 'd': 3, 'a': 2, 'e': 2, 'b': 2})
-t1&t2 : Counter({'c': 2, 'a': 2, 'e': 2, 'b': 2, 'd': 1}) """
+t1 & t2 : Counter({'c': 2, 'a': 2, 'e': 2, 'b': 2, 'd': 1}) """
 # | Union, keep the maximum counts
 """ t1 : Counter({'b': 4, 'e': 4, 'a': 3, 'c': 2, 'd': 1})
 t2 : Counter({'c': 4, 'd': 3, 'a': 2, 'b': 2, 'e': 2})
-t1|t2 : Counter({'b': 4, 'e': 4, 'c': 4, 'a': 3, 'd': 3}) """ 
+t1 | t2 : Counter({'b': 4, 'e': 4, 'c': 4, 'a': 3, 'd': 3}) """ 
 # Intersections: &, keep only the min counts
 """ t1 : Counter({'e': 4, 'b': 4, 'a': 3, 'c': 2, 'd': 1})
 t2 : Counter({'c': 4, 'd': 3, 'a': 2, 'e': 2, 'b': 2})
@@ -90,3 +90,12 @@ str1[:] = str1[::-1] #slice assignment, it alter the array in place.  not like t
 print(str1)
 
 #list.reverse() return None, if you want to return reversed copy use list[::-1]
+
+x = y = z = 3
+print(x, y, z)
+
+# assignment expr can not assign to tuple in left
+# comparison tuple
+print([4, 2] > [3, 9])
+print(tuple([4, 2]) > (3, 9))
+print((4, 2) > (3, 9))

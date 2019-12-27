@@ -44,41 +44,13 @@ based on the input size, it should be a search question, but can be optimized by
 
 import collections
 from typing import List
-class Solution_ListAsState:
+class Solution_BFS:
     def minStickers(self, stickers: List[str], target: str) -> int:
-        
-        def str2arr(s):
-            ans = [0] * 26
-            for ch in s:
-                ans[ord(ch) - 97] += 1
-            return ans
-        def substract(a, b):
-            return [max(0, x - y) for x, y in zip(a, b)] 
-        t = str2arr(target)
-        s = [str2arr(sticker) for sticker in stickers]
-        step = 0
-        seen = {tuple(t)}
-        q = collections.deque([t])
-        while q:
-            l = len(q)
-            for _ in range(l):
-                arr = q.popleft()
-                if sum(arr) == 0: return step
-                for ss in s:
-                    nt = substract(arr, ss)
-                    if sum(nt) == 0: return step + 1
-                    if tuple(nt) not in seen:
-                        q.append(nt)
-                        seen.add(tuple(nt))
-            step += 1
-        return -1
-
-class Solution:
-    def minStickers(self, stickers: List[str], target: str) -> int:
+        collections.Counter.__hash__ = lambda self: hash(tuple(sorted(self.items()))) #override __hash__ function of Counter
         t = collections.Counter(target)
         s = [collections.Counter(sticker) for sticker in stickers]
         step = 0
-        seen = {tuple(sorted(t.items()))}
+        seen = {t}
         q = collections.deque([t])
         while q:
             l = len(q)
@@ -86,15 +58,28 @@ class Solution:
                 cnt = q.popleft()
                 if sum(cnt.values()) == 0: return step
                 for ss in s:
-                    nt = cnt - ss
-                    if sum(nt.values()) == 0: return step + 1
-                    if (hash := tuple(sorted(nt.items()))) not in seen:
-                        q.append(nt)
-                        seen.add(hash)
+                    if list(cnt.keys())[-1] in ss: # Pruning, when use sticker to substract target, the order is irrelevant to result. 
+                    #so we can first choose must substract one of character (here I pick the last one of counter keys) in target, then next character, the minimum step must be one of selections.
+                        nt = cnt - ss
+                        if sum(nt.values()) == 0: return step + 1
+                        if nt not in seen:
+                            q.append(nt)
+                            seen.add(nt)
             step += 1
         return -1
+import functools
+class Solution_DFS:
+    def minStickers(self, stickers: List[str], target: str) -> int:
+        collections.Counter.__hash__ = lambda self: hash(tuple(sorted(self.items()))) #override __hash__ function of Counter
+        t = collections.Counter(target)
+        s = list(map(collections.Counter, stickers))
+        if set(t).difference(*s): return -1 # set difference() = setA - setB, it can accept multiple arguments *
+        @functools.lru_cache(None)
+        def dfs (t):
+            return 1 + min(dfs(t - cnt) for cnt in s if [*t][0] in cnt) if t else 0 #same pruning as BFS
+        return dfs(t)
 
-
-print(Solution().minStickers(["these","guess","about","garden","him"], "atomher")) #3
-print(Solution().minStickers(["with", "example", "science"], "thehat")) #3
-print(Solution().minStickers(["notice", "possible"], "basicbasic")) #-1
+s = Solution_DFS()
+print(s.minStickers(["these","guess","about","garden","him"], "atomher")) #3
+print(s.minStickers(["with", "example", "science"], "thehat")) #3
+print(s.minStickers(["notice", "possible"], "basicbasic")) #-1
