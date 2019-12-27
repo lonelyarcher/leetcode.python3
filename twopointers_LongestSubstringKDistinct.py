@@ -3,31 +3,27 @@ Given a string, find the length of the longest substring T that contains at most
 distinct characters.
 For example, Given s = “eceba” and k = 2,
 T is "ece" which its length is 3.
-思路：典型的滑动窗口，双指针的问题。如果外面直接套while，太容易写错了。所以直接for loop j。然后移动i来确保每次都是valid的。用res来存最大的结果就行了。
+
+
+
+
+i, j fast/slow pointers, use a dict to record last occupancy position of character
+when more than K distinct characters, move the slow pointer j to the most left ( smallest ) last occupancy position
+then update the res of i - j, delete/pop this last occupancy key from dict
 '''
 
-import collections
-class Solution(object):
-    def lengthOfLongestSubstringKDistinct(self, s, k):
-        j, res = 0, 0
-        m = {}
-        for i in range(len(s)):
-            m[s[i]] = i
-            while len(m) > k:
-                if m[s[j]] == j: m.pop(s[j])
-                j += 1 
-            res = max(res, i - j + 1)
-        return res
 
-    def lengthOfLongestSubstringKDistinct2(self, s, k):
-        res = 0
+class Solution(object):
+
+    def lengthOfLongestSubstringKDistinct(self, s, k):
+        res, j = 0, -1 # init j = -1, then i - j = len(s) when k > distinct char in s 
         m = {}
         for i,c in enumerate(s):
             m[c] = i
             if len(m) > k:
-                index = min(m.values)
-                del m[m[index]]
-            res = max(res, i - index)
+                j = min(m.values())
+                m.pop(s[j])
+            res = max(res, i - j)
         return res
 
 # test
