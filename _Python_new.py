@@ -104,3 +104,4 @@ print((4, 2) > (3, 9))
 #f string
 x, y = 3, 3.1415926 
 print(f"x={x} y={y:.2f}")
+print(sorted('ababcaa'))

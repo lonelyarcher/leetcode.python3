@@ -1,9 +1,9 @@
 import itertools
-def permutations(A):
+def permutations(A, n):
     A.sort() # for later avoiding repeat
     ans, seen = [], [False] * len(A)
     def permute(path):
-        if len(path) == len(A):
+        if len(path) == n:
             ans.append(tuple(path))
         else:
             for j in range(len(A)):
@@ -42,8 +42,8 @@ def combinations_with_replacement(A, n):
     rec([], 0)
     return ans
 
-print(permutations([1, 1, 1]))
-print(list(itertools.permutations([1, 1, 1]))) # include repeat
+print(permutations([1, 1, 2, 1], 2))
+print(list(itertools.permutations([1, 1, 2, 1], 2))) # include repeat
 
 print(combinations([1, 2, 3, 4, 5], 3))
 print(list(itertools.combinations([1, 2, 3, 4, 5], 3)))
