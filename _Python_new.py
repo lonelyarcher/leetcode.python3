@@ -106,3 +106,15 @@ print((4, 2) > (3, 9))
 x, y = 3, 3.1415926 
 print(f"x={x} y={y:.2f}")
 print(sorted('ababcaa'))
+
+
+#flat list of list
+l = [[1, 2], [3]]
+print([item for sublist in l for item in sublist]) 
+print(sum(l, [])) # print(sum(l, start=[])) both are OK, because no * in sum method argument signature
+import operator, functools, itertools
+print(functools.reduce(operator.add, l)) # operator.concat is also OK here
+print(list(itertools.chain(*l)))
+print([1, 2] == [1, 2])
+print(float("inf") - float("inf"))
+print("-".join("abc"))
