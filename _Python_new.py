@@ -19,13 +19,14 @@ print("abcd" is "abcd") #True
 
 # Python operations on set
 # union:| intersections: & difference from first to the seconde: -, ^ symmetric difference
-# set add() update() remove(), list append() extend() pop() remove()
+# set add() update() remove(), list append() extend() pop() remove() different(*othersets) union(*othersets) intersection(*othersets) different_symmetric(other)
+# dictionary update(other dict or key/value pairs)
 A = {0, 2, 4, 6, 8}
 B = {1, 2, 3, 4, 5}
 print(A | B == {0, 1, 2, 3, 4, 5, 6, 8}) #True
 print(A & B == {2, 4}) #True
 print(A - B == {0, 6, 8}) #True
-print(A ^ B == {0, 1, 3, 5, 6, 8}) #True
+print(A ^ B == {0, 1, 3, 5, 6, 8}) #True Return a new set with elements in either the set or other but not both.
 # Python operations on Counter, 
 # + addition of count
 # - substraction, keep only positive counts
