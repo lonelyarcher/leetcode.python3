@@ -65,7 +65,7 @@ if the reduce result equals to zero, we return as recursive dfs call on i + 1 co
 
 
  for easy implementation: 
-    1. we reverse the words and result, then we can natural i begin with 0
+    1. we reverse the words and result, then we can naturally make i beginning with 0
     2. put all leading character into a set, easy to exclude the invalid assignment zero to them
     3. put carry in dfs carry arguments, because we may have carry to higher digits
 """

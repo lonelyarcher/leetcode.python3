@@ -7,3 +7,5 @@
 7. use dictionary comprehension {key: val for k in list if k}
 8. operator.add sub mul and_ or_ concat
 9. list comprehension with double loops, always first loop is big one, like rows, outer list, then columns, list element.  m[row][col] for row in matrix for col in row, row can't appear after "in" first
+10. check error: mess up list index and elements, == and =, for if forget end with :
+11. bin str -> int int(n, 2), int -> bin str bin(num) = '0b1100111'
