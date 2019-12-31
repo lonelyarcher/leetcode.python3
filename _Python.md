@@ -5,9 +5,13 @@
 5. sum with start=, min, max with default=, itertools.accumulate initial=
 6. tuple comparison: (2, 9) < (3, 0)
 7. when loop two iterables at the same time, use zip(l1, l2) 
+8. use dictionary comprehension {key: val for k in list if k}
+9. operator.add sub mul and_ or_ concat
+10. list comprehension with double loops, always first loop is big one, like rows, outer list, then columns, list element.  m[row][col] for row in matrix for col in row, row can't appear after "in" first
+11. bin str -> int int(n, 2), int -> bin str bin(num) = '0b1100111'
+
 
 prone to errors:
-
-1. forget self
-2. mess with array idx and value.
-3. while loop move the idx, forget set restriction on idx < len(arr)
+    1. forget self
+    2. mess with array idx and value,  == and =, for if forget end with :
+    3. while loop move the idx, forget set restriction on idx < len(arr)

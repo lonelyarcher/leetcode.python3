@@ -19,13 +19,14 @@ print("abcd" is "abcd") #True
 
 # Python operations on set
 # union:| intersections: & difference from first to the seconde: -, ^ symmetric difference
-# set add() update() remove(), list append() extend() pop() remove()
+# set add() update() remove(), list append() extend() pop() remove() different(*othersets) union(*othersets) intersection(*othersets) different_symmetric(other)
+# dictionary update(other dict or key/value pairs)
 A = {0, 2, 4, 6, 8}
 B = {1, 2, 3, 4, 5}
 print(A | B == {0, 1, 2, 3, 4, 5, 6, 8}) #True
 print(A & B == {2, 4}) #True
 print(A - B == {0, 6, 8}) #True
-print(A ^ B == {0, 1, 3, 5, 6, 8}) #True
+print(A ^ B == {0, 1, 3, 5, 6, 8}) #True Return a new set with elements in either the set or other but not both.
 # Python operations on Counter, 
 # + addition of count
 # - substraction, keep only positive counts
@@ -100,4 +101,22 @@ print([4, 2] > [3, 9])
 print(tuple([4, 2]) > (3, 9))
 print((4, 2) > (3, 9))
 
-print(not {0})
+print(not {0}) #False
+
+#f string
+x, y = 3, 3.1415926 
+print(f"x={x} y={y:.2f}")
+print(sorted('ababcaa'))
+
+
+#flat list of list
+l = [[1, 2], [3]]
+print([item for sublist in l for item in sublist]) 
+print(sum(l, [])) # print(sum(l, start=[])) both are OK, because no * in sum method argument signature
+import operator, functools, itertools
+print(functools.reduce(operator.add, l)) # operator.concat is also OK here
+print(list(itertools.chain(*l)))
+print([1, 2] == [1, 2])
+print(float("inf") - float("inf"))
+print("-".join("abc"))
+print(len(list(itertools.combinations(range(10), 2))))
