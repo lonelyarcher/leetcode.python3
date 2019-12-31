@@ -99,3 +99,5 @@ print(x, y, z)
 print([4, 2] > [3, 9])
 print(tuple([4, 2]) > (3, 9))
 print((4, 2) > (3, 9))
+
+print(not {0})
