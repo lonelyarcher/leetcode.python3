@@ -119,3 +119,6 @@ print([1, 2] == [1, 2])
 print(float("inf") - float("inf"))
 print("-".join("abc"))
 print(len(list(itertools.combinations(range(10), 2))))
+
+print(inspect(list))
+print(set.intersection({1}, {2}))
