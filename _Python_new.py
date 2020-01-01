@@ -101,6 +101,7 @@ print([4, 2] > [3, 9])
 print(tuple([4, 2]) > (3, 9))
 print((4, 2) > (3, 9))
 
+print(not {0}) #False
 
 #f string
 x, y = 3, 3.1415926 
@@ -120,5 +121,4 @@ print(float("inf") - float("inf"))
 print("-".join("abc"))
 print(len(list(itertools.combinations(range(10), 2))))
 
-print(inspect(list))
 print(set.intersection({1}, {2}))
