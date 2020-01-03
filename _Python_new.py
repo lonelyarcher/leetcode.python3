@@ -122,3 +122,11 @@ print("-".join("abc"))
 print(len(list(itertools.combinations(range(10), 2))))
 
 print(set.intersection({1}, {2}))
+
+# add lists
+print([1] + [1])
+# print([1, 2] - [1]) list can't subtract, only set can 
+print([i for i in [1, 2] if i not in [1]])
+print(list(set([1, 2]) - set([1])))
+print(6/2)
+print(3.0 in {3} and 3.0 == 3)
