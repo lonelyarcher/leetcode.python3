@@ -41,6 +41,8 @@ t1 | t2 : Counter({'b': 4, 'e': 4, 'c': 4, 'a': 3, 'd': 3}) """
 """ t1 : Counter({'e': 4, 'b': 4, 'a': 3, 'c': 2, 'd': 1})
 t2 : Counter({'c': 4, 'd': 3, 'a': 2, 'e': 2, 'b': 2})
 t1&t2 : Counter({'c': 2, 'a': 2, 'e': 2, 'b': 2, 'd': 1}) """
+''' c += Counter() '''# remove zero and negative counts
+'''counter.most_common() Return a list of the n most common elements and their counts from the most common to the least. If n is omitted returns all elements ordered by counts desc.'''
 
 #bisect.bisect() = bisect.bisect_right() find first GT, bisect.bisect_left() find first GE
 
