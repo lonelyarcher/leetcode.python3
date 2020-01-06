@@ -39,10 +39,28 @@ scan n y values, each y count n x values, so total is O(n^2)
 
 use segment tree can optimize to O(n*log(n)), when count , add/sub(x1, x2) into the count
 """
-
+from typing import List
+import itertools
 class Solution:
     def rectangleArea(self, rectangles: List[List[int]]) -> int:
-        pass
+        x = sorted(set(itertools.chain(*[[r[0], r[2]] for r in rectangles])))
+        xi = {v: i for i, v in enumerate(x)}
+        count = [0] * (len(x) - 1)
+        l = []
+        for x1, y1, x2, y2 in rectangles:
+            l.append((y1, x1, x2, 1))
+            l.append((y2, x1, x2, -1))
+        l.sort()
+        pre_y, sum_x, area = l[0][0], 0, 0
+        for y, x1, x2, d in l:
+            area += (y - pre_y) * sum_x
+            pre_y = y
+            for i in range(xi[x1], xi[x2]):
+                count[i] += d
+            sum_x = sum((nex_x - cur_x if c else 0) for cur_x, nex_x, c in zip(x, x[1:], count))
+        return area % 1000000007
+
 
 print(Solution().rectangleArea([[0,0,2,2],[1,0,2,3],[1,0,3,1]])) #6
 print(Solution().rectangleArea([[0,0,1000000000,1000000000]])) #49
+
