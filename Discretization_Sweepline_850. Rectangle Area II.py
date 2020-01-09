@@ -37,11 +37,64 @@ count for index 0 to len(x) - 2, number of overlaps between i and i + 1
 
 scan n y values, each y count n x values, so total is O(n^2)
 
-use segment tree can optimize to O(n*log(n)), when count , add/sub(x1, x2) into the count
+use segment tree/BIT can optimize to O(n*log(n)), when count , add/sub(x1, x2) into the count
 """
 from typing import List
 import itertools
 class Solution:
+
+    class BIT:
+        def __init__(self, n):
+            self.bit = [0] * (n + 1)
+        def update(self, i, val):
+            i += 1
+            while i < len(self.bit):
+                self.bit[i] += val
+                i += i & -i
+        def query(self, i):
+            ans = 0
+            i += 1
+            while i > 0:
+                ans += self.bit[i]
+                i -= i & (-i)
+            return ans
+
+    class Node(object):
+        def __init__(self, start, end):
+            self.start, self.end = start, end
+            self.total = self.count = 0
+            self._left = self._right = None
+
+        @property
+        def mid(self):
+            return (self.start + self.end) // 2
+
+        @property
+        def left(self):
+            self._left = self._left or type(self)(self.start, self.mid)
+            return self._left
+
+        @property
+        def right(self):
+            self._right = self._right or type(self)(self.mid, self.end)
+            return self._right
+
+        def update(self, i, j, val):
+            if i >= j: return 0
+            if self.start == i and self.end == j:
+                self.count += val
+            else:
+                self.left.update(i, min(self.mid, j), val)
+                self.right.update(max(self.mid, i), j, val)
+
+            if self.count > 0:
+                self.total = X[self.end] - X[self.start]
+            else:
+                self.total = self.left.total + self.right.total
+
+            return self.total
+        
+
     def rectangleArea(self, rectangles: List[List[int]]) -> int:
         x = sorted(set(itertools.chain(*[[r[0], r[2]] for r in rectangles])))
         xi = {v: i for i, v in enumerate(x)}

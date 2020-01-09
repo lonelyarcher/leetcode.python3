@@ -32,8 +32,8 @@ class NumMatrix:
             j = c
             while j < self.n + 1:
                 self.bit[i][j] += delta
-                j += j & (-j)
-            i += i & (-i)
+                j += j & -j
+            i += i & -i
 
     def sumRegion(self, row1: int, col1: int, row2: int, col2: int) -> int:
         return self.query(row2 + 1, col2 + 1) - self.query(row1, col2 + 1) - self.query(row2 + 1, col1) + self.query(row1, col1)
@@ -45,8 +45,8 @@ class NumMatrix:
             j = c
             while j > 0:
                sum += self.bit[i][j]
-               j -= j & (-j)
-            i -= i & (-i)
+               j -= j & -j
+            i -= i & -i
         return sum 
         
 
