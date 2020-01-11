@@ -16,3 +16,6 @@ prone to errors:
     2. mess with array idx and value,  == and =, for if forget end with :
     3. while loop move the idx, forget set restriction on idx < len(arr)
 
+BIT: construct [0] * (n + 1), update while <= n, i += lowbit, query while > 0, i -= lowbit i&-i
+Segment Tree: Node: start, end, val, left, right, from arr, construct recursive from root, update, query by range, good for range update
+
