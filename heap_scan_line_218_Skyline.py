@@ -19,28 +19,28 @@ There must be no consecutive horizontal lines of equal height in the output skyl
 '''
 
 import heapq
+import itertools
 class Solution:
     def getSkyline(self, buildings):
         """
         :type buildings: List[List[int]]
         :rtype: List[List[int]]
         """
-        res = []
-        i, n = 0, len(buildings)
-        heap = []
-        while heap or i < n:
-            if not heap or (i < n and buildings[i][0] <= -heap[0][1]):
-                x = buildings[i][0]
-                while i < n and buildings[i][0] == x:
-                    heapq.heappush(heap, [-buildings[i][2], -buildings[i][1]])
-                    i += 1
+        
+        res, heap = [], []
+        # less x first,  in first, higher in first, lower out first
+        events = sorted(itertools.chain(*[[(l, -h), (r, h)] for l, r, h in buildings]))
+        print(events)
+        for x, h in events:
+            if h < 0:
+                if not heap or -h > -heap[0]: res.append([x, -h])
+                heapq.heappush(heap, h)
             else:
-                x = -heap[0][1]
-                while heap and -heap[0][1] <= x:
-                    heapq.heappop(heap)
-            height = 0 if not heap else -heap[0][0]
-            if not res or res[-1][1] != height:
-                res.append([x, height])
+                heap.remove(-h)
+                heapq.heapify(heap)
+                if heap and -heap[0] < h:
+                    res.append([x, -heap[0]])
+                if not heap: res.append([x, 0])
         return res
 
 s = Solution()

@@ -21,3 +21,6 @@ prone to errors:
 
 
 
+BIT: construct [0] * (n + 1), update while <= n, i += lowbit, query while > 0, i -= lowbit i&-i
+Segment Tree: Node: start, end, val, left, right, from arr, construct recursive from root, update, query by range, good for range update
+
