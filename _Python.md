@@ -9,14 +9,15 @@
 9. operator.add sub mul and_ or_ concat
 10. list comprehension with double loops, always first loop is big one, like rows, outer list, then columns, list element.  m[row][col] for row in matrix for col in row, row can't appear after "in" first, but for 2 dimension list is on the contrary
 11. bin str -> int int(n, 2), int -> bin str bin(num) = '0b1100111'
-12. operator precedence: **, ~+-, */%//, +-, <<>> ,&^| ,in not in is not is ,< > <= >= != ==, = += -= *= /=, not and or
-bit operator <<>>, &^| after */+-, then in not in, comparison <>==, then assignment, then and or
+12. operator precedence: **, ~+-, *, /, %, +, -, <<>> ,&^| ,in not in is not is ,< > <= >= != ==, = += -= *= /=, not and or
+bit operator <<>>, &^| after */+-, then in not in, comparison <>==, then assignment, then and or. */ > % mod > +-
 prone to errors:
     1. forget self
     2. mess with array idx and value,  == and =, for if forget end with :
     3. while loop move the idx, forget set restriction on idx < len(arr)
     4. when need to judge >= < or which side? slow down and draw a picture. like binary search, which side to abandon
     5. multiple corner cases, slow down to list all possibilities. maintain multiple flags and status variables is workable, but don't forget to update/maintain, write down a list on whiteboard, check on every conditions
+    6. == mess with = , or vice versa 
 
 
 
