@@ -39,5 +39,16 @@ class Solution:
         return re.sub(r'(\d)', lambda m: chr(ord('a') + int(m.group(1)) - 1), ans)
     def freqAlphabets(self, s):
         return ''.join(chr(int(i[:2]) + 96) for i in re.findall(r'\d\d#|\d', s))
+    def freqAlphabets(self, s):
+        ans, i = [], 0
+        while i < len(s):
+            if i < len(s) - 2 and s[i + 2] == '#':
+                ans.append(chr(int(s[i:i + 2]) + 96))
+                i += 3
+            else:
+                ans.append(chr(int(s[i]) + 96))
+                i += 1
+        return "".join(ans)
+
 
 print(Solution().freqAlphabets("12345678910#11#12#13#14#15#16#17#18#19#20#21#22#23#24#25#26#")) #Output: "abcdefghijklmnopqrstuvwxyz"
