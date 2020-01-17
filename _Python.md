@@ -17,7 +17,8 @@ prone to errors:
     3. while loop move the idx, forget set restriction on idx < len(arr)
     4. when need to judge >= < or which side? slow down and draw a picture. like binary search, which side to abandon
     5. multiple corner cases, slow down to list all possibilities. maintain multiple flags and status variables is workable, but don't forget to update/maintain, write down a list on whiteboard, check on every conditions
-    6. == mess with = , or vice versa 
+    6. == mess with = , or vice versa
+    7. range(m, n) n is exclude
 
 
 

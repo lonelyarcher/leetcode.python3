@@ -20,7 +20,7 @@ Constraints:
 text has only lowercase English letters. """
 
 class Solution:
-    def distinctEchoSubstrings(self, text: str) -> int:
+    def distinctEchoSubstrings0(self, text: str) -> int:
         n, mod, ans = len(text), 1000000007, set()
         pow = [1]
         for _ in range(n): pow.append(pow[-1] * 31)
@@ -39,10 +39,51 @@ class Solution:
                 if h1 == h2: ans.add(text[i:i + l])
         print(ans)
         return len(ans)
+    '''
+    Better solution for rolling hash, try inserting a line between two index, like a|b|c|a|b|c, expanding from each line, 
+    if left part == right part, then it is a echo substring
+    while expanding, left part always add one char to its head, and right part alway add one char to its tail, we can use rolling hash to reduce compare string to O(1)
+    so total time will be O(n^2) 
+    '''
+    def distinctEchoSubstrings(self, text: str) -> int:
+        n, mod, ans = len(text), 1000000007, set()
+        pow = [1] #rolling hash, always calculate the pow array
+        for i in range(n): pow.append(pow[-1] * 31)
+        c = lambda i: ord(text[i]) - ord('a') + 1
+        for i in range(n - 1):
+            h1, h2 = c(i), c(i + 1)
+            if h1 == h2: ans.add(text[i: i + 2])
+            for j in range(1, min(i + 1, n - (i + 1))):
+                h1 = (h1 + c(i - j) * pow[j]) % mod
+                h2 = (h2 * 31 + c(i + j + 1)) % mod
+                if h1 == h2: ans.add(text[i - j:i + j + 2])
+        print(ans)
+        return len(ans)
+    ''' best O(n^2) solution without rolling hash. 
+    for every substring, n^2, first iterate by len, then for this length, we move the beginning point i from left to right
+    text = eabcabc
+    for length 3, e a b | c a b => e a b   => count 2 matches, a == a and b == b, if we move a step to right a b c | a b c, a == a, b == b matches are kept
+                                   c a b 
+    we add new incoming match c == c, remove the previous pair e != c, we do the same rolling matches, when total match count == 3, we add it into the set                               
+    '''
+    def distinctEchoSubstrings2(self, text: str) -> int:
+        ans, n = set(), len(text)
+        for l in range(2, n + 1, 2):
+            match = sum(a == b for a, b in zip(text[:l//2], text[l//2:l]))
+            if match == l//2: ans.add(text[:l])
+            for i in range(n - l + 1):
+                match += (text[i + l - 1] == text[i + l//2 - 1]) - (text[i - 1] == text[i + l//2 - 1])
+                if match == l//2: ans.add(text[i:i + l])
+        return len(ans)
+        
                 
 s1 = Solution()
 print(s1.distinctEchoSubstrings("leetcodeleetcode")) #2
 print(s1.distinctEchoSubstrings("abcabcabc")) #3
+print(s1.distinctEchoSubstrings2("leetcodeleetcode")) #2
+print(s1.distinctEchoSubstrings2("abcabcabc")) #3
+
+
 
 
 
