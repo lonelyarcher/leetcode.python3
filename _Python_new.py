@@ -133,3 +133,13 @@ print(list(set([1, 2]) - set([1])))
 print(6/2)
 print(3.0 in {3} and 3.0 == 3)
 print(range(4)[:2])
+
+
+#python string methods:
+# rstrip()
+# find(s), index(s) both return the first index of s, but index raise exception , find return -1
+# 
+try:
+    pass
+except:
+    raise
