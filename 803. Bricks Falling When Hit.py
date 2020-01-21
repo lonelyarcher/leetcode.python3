@@ -67,52 +67,66 @@ class Solution_1:
         return ans
 
 '''
+O(m*n + len(hits)) better than previous solution
 UnionFind, first remove all the hitted block, do the uf, 
 then in reverse order of hits, join the components, 
 each time increase the size of connected (from the top) components, 
 the increased amount is the ans of that hit
+
+Trick 1: all block == 1 in the first row can connect to a virtual block m*n, so the non-falling blocks size[find(m*n)]
+Trick 2: first set all hits block to 0, but some hits block are initial 0, so at this turn none falling, we'd better keep the original grid, and make a copy of A
+Trick 3: we record a size[] to record connected component size, when join, add child size to parent, need be careful, if both already connected, don't update size
 '''
 
 class Solution:
     def hitBricks(self, grid: List[List[int]], hits: List[List[int]]) -> List[int]:
         m, n = len(grid), len(grid[0])
-        for i, j in hits: grid[i][j] = 0
+        A = [row[:] for row in grid]
+        for i, j in hits: A[i][j] = 0
+        
+        def move(i, j):
+            for d in dir:
+                ni, nj = i + d[0], j + d[1]
+                if 0 <= ni < m and 0 <= nj < n and A[ni][nj] == 1:
+                    yield ni, nj
+                
         dir = [[0, 1], [1, 0], [-1, 0], [0, -1]]
         parent = [i for i in range(m * n + 1)]
-        size = [grid[i][j] for i in range(m) for j in range(n)] + [0]
+        size = [A[i][j] for i in range(m) for j in range(n)] + [0]
         def find(i):
             if parent[i] != i: parent[i] = find(parent[i])
             return parent[i]
         def union(i, j):
+            if find(i) == find(j): return
             size[find(j)] += size[find(i)]
             parent[find(i)] = find(j)
             
 
         for j in range(n):
-            if grid[0][j] == 1:
+            if A[0][j] == 1:
                 union(j, m * n)
 
         for i in range(m):
             for j in range(n):
-                if grid[i][j] == 1:
-                    for d in [[0, 1], [1, 0]]:
-                        ni, nj = i + d[0], j + d[1]
-                        if 0 <= ni < m and 0 <= nj < n and grid[ni][nj] == 1:
-                            union(i * n + j, ni * n + nj)
-        ans = collections.deque()
+                if A[i][j] == 1:
+                    for ni, nj in move(i, j):
+                        union(i * n + j, ni * n + nj)
+        ans = []
         for i, j in hits[::-1]:
-            pre = size[find(0)]
-            grid[i][j] = 1
-            if i == 0: union(i * n + j, m * n)
-            for d in dir:
-                ni, nj = i + d[0], j + d[1]
-                if 0 <= ni < m and 0 <= nj < n and grid[ni][nj] == 1:     
-                    union(i * n + j, ni * n + nj if ni > 0 else 0)
-            ans.appendleft(size[find(0)] - pre)
-            
-            size[find(i * n + j)] += 1        
-        return ans
+            if grid[i][j]:
+                pre = size[find(m * n)]
+                A[i][j] = 1
+                size[i * n + j] = 1
+                if i == 0: union(i * n + j, m * n)
+                for ni, nj in move(i, j):   
+                    union(i * n + j, ni * n + nj)
+                ans.append(max(0, size[find(m * n)] - pre - 1))
+            else:
+                ans.append(0)
+        
+        return ans[::-1]
 
+print(Solution().hitBricks([[1,1,1],[0,1,0],[0,0,0]], [[0,2],[2,0],[0,1],[1,2]])) #[0,0,1,0]
 print(Solution().hitBricks([[1,0,1],[1,1,1]], [[0,0],[0,2],[1,1]])) # [0 3 0] 
 print(Solution().hitBricks([[1],[1],[1],[1],[1]], [[3,0],[4,0],[1,0],[2,0],[0,0]])) #[1,0,1,0,0]
 print(Solution().hitBricks([[1,0,0,0],[1,1,1,0]], [[1,0]])) #[2]
