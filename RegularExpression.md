@@ -8,4 +8,6 @@
 \d match digits \D non digits
 \w = [a-zA-Z0-9_] \W no w, can be used to split
 re.split(r'\W+', "i am , a person.") = ('i', 'am', 'a', 'person', '') flags=re.I
-re.findall(pattern, string, flags=0), re.finditer()
+for s in re.findall(pattern, string, flags=0):  return matched substring only
+for m in re.finditer(pattern, string, flags=) return match object, m.start() m.end() m.group(0)
+find 5 repeating chars  re.findall(r'(.)\1{4,}', text)
