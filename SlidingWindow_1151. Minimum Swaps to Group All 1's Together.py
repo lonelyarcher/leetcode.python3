@@ -32,7 +32,9 @@ Note:
 1 <= data.length <= 10^5
 0 <= data[i] <= 1 """
 
-
+'''
+first find out how many one in the array an length, then moving this fix_length windows sliding from left to right
+'''
 from collections import Counter
 from typing import List
 class Solution:

@@ -31,5 +31,6 @@ Note:
 board will be a 2 x 3 array as described above.
 board[i][j] will be a permutation of [0, 1, 2, 3, 4, 5]. """
 
+
 class Solution:
     def slidingPuzzle(self, board: List[List[int]]) -> int:
