@@ -31,6 +31,37 @@ Note:
 board will be a 2 x 3 array as described above.
 board[i][j] will be a permutation of [0, 1, 2, 3, 4, 5]. """
 
-
+'''
+012
+345
+'''
+from typing import List
+import collections
 class Solution:
     def slidingPuzzle(self, board: List[List[int]]) -> int:
+        board = tuple(col for row in board for col in row)
+        m = {0: [1, 3], 1: [0, 2, 4], 2: [1, 5], 3: [0, 4], 4: [1, 3, 5], 5: [2, 4]}
+        step = 0
+        seen, target = {tuple(board)}, (1, 2, 3, 4, 5, 0)
+        q = collections.deque([board])
+        while q:
+            l = len(q)
+            for _ in range(l):
+                x = q.popleft()
+                if x == target: return step
+                for i, v in enumerate(x):
+                    if v == 0:
+                        for ni in m[i]:
+                            nx = list(x)
+                            nx[ni], nx[i] = 0, x[ni]
+                            nx = tuple(nx)
+                            if nx not in seen:
+                                seen.add(nx)
+                                q.append(nx)
+            step += 1
+        return -1
+
+print(Solution().slidingPuzzle([[1,2,3],[4,0,5]]))  # 1
+print(Solution().slidingPuzzle([[1,2,3],[5,4,0]]))  # -1
+print(Solution().slidingPuzzle([[4,1,2],[5,0,3]]))  # 5
+                                
