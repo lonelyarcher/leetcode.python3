@@ -30,7 +30,8 @@ S consists only of characters from the set {'D', 'I'}. """
 First dfs to find all the permutation is a option, but the time complexity is O(n!) but n = S.length up to 200, so N! will be TLE (time limit exceeds)
 
 n = len(S) + 1
-Permutation from 0 to (n - 1) based on S decreasing or increasing, the number itself doesn't matter, [1, 2, 3] will have same permution number as [2, 5, 7] for whatever DI sequences
+Permutation from 0 to (n - 1) based on S decreasing or increasing, the number itself doesn't matter, 
+[1, 2, 3] will have same permution number as [2, 5, 7] for whatever DI sequences
 The relative rank between the numbers matters.
 This problem can be solved high possibly by DP, the hardest part is define the state, the first i numbers is one of state for sure, but it is not enough
 You can't decide when new D/I character appear, the new coming number depends on the last number

@@ -29,7 +29,7 @@ When release, only one of other thread will acquire the lock if multiple threads
 RLock, can recursively lock acquire on locked state when owned by thread itself, will increase recursive count by one. release will reduce count by one.
 And thread can only release the lock owned by itself, can't release another thread's lock.
 
-Event: like the lock, it has internal flag true and false. set() to true, clear() to false. Once set(), it will change all the wait() thread to free, not kike lock only one thread.
+Event: like the lock, it has internal flag true and false. set() to true, clear() to false. Once set(), it will change all the wait() thread to free, not like lock only one thread.
 
 Semaphore: has a internal atomic counter as the limits of the number of thread can pass at the same time in acquire(), 
 which when acquire will reduce by one and when release will increase by one. It is very helpful to control a number of threads can do something first.
@@ -51,9 +51,11 @@ class thread(threading.Thread):
         self.thread_ID = thread_ID 
     def run(self): 
         print(str(self.thread_ID) + "\n") 
-        print("Parties = " + str(barrier.parties) + "\n") 
-        print("n_waiting = " + str(barrier.n_waiting) + "\n") 
+        print("Parties = " + str(barrier.parties) + "\n")
+        print("n_waiting = " + str(barrier.n_waiting) + "\n")  
         barrier.wait() 
+        
+        
           
 thread1 = thread(100) 
 thread2 = thread(101) 
@@ -61,11 +63,21 @@ thread2 = thread(101)
 thread1.start() 
 thread2.start() 
   
-barrier.wait() 
+thread5 = thread(104)
+thread5.start()
   
-print(str(barrier.broken) + "\n") 
+#print(str(barrier.broken) + "\n") 
 print("n_waiting after free = " + str(barrier.n_waiting))
-barrier.reset() 
+print("parties after free = " + str(barrier.parties))
+#barrier.reset() 
 print("n_waiting after reset = " + str(barrier.n_waiting)) 
-barrier.abort() 
+thread3 = thread(102)
+thread3.start()
+thread4 = thread(103)
+thread4.start()
+thread6 = thread(105)
+thread6.start()
+
+
+
 print("End") 

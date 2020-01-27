@@ -1,6 +1,7 @@
 """ Two images A and B are given, represented as binary, square matrices of the same size.  (A binary matrix has only 0s and 1s as values.)
 
-We translate one image however we choose (sliding it left, right, up, or down any number of units), and place it on top of the other image.  After, the overlap of this translation is the number of positions that have a 1 in both images.
+We translate one image however we choose (sliding it left, right, up, or down any number of units), and place it on top of the other image.  
+After, the overlap of this translation is the number of positions that have a 1 in both images.
 
 (Note also that a translation does not include any kind of rotation.)
 
@@ -18,8 +19,16 @@ Output: 3
 Explanation: We slide A to right by 1 unit and down by 1 unit.
 Notes: 
 
-1 <= A.length = A[0].length = B.length = B[0].length <= 30
+1 <= A.length = A[0].length = B.length = B[0].length <= 30  
 0 <= A[i][j], B[i][j] <= 1 """
+
+
+
+'''
+when overlap on two squares: for each overlaping points, the row coordinate difference between A and B are all same, the col difference are same too
+if we convert to one demension arr_A and arr_B, count on all combination pairs, the max value of Counter is answer.
+If sparse matrix, we only count on 1 point, which will be great optimize.
+'''
 from typing import List
 import collections
 class Solution:
