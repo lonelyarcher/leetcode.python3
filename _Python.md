@@ -19,6 +19,7 @@ prone to errors:
     5. multiple corner cases, slow down to list all possibilities. maintain multiple flags and status variables is workable, but don't forget to update/maintain, write down a list on whiteboard, check on every conditions
     6. == mess with = , or vice versa
     7. range(m, n) n is exclude
+    8. join str + str(1), remember to convert int to str or vice versa
 
 
 
