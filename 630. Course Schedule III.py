@@ -21,8 +21,10 @@ You can't take two courses simultaneously. """
 
 '''
 Assume you have a max courses list, sort it by ending time.
-at each ending time, the sum of courses begin before it can not exceed the ending time.
-If exceed, then it means it has overlaping, you need remove one, we can greedy remove the longest one.
+at each ending time, the sum of courses begin before it can not exceed the ending time. This is necessary and sufficient.
+Since if not exceed, you can always slide the duration back to hold all the courses inside the ending time.
+If exceed, then it means it has overlaping, you need remove one, we can greedy remove the longest one,
+This is always true. By greedy remove the longest duration courses, you can keep the accumulative courses time as short as possible, better for future appending course.
 why remove longest one, because it must remove, so it is most helpful to solve the problem
 
 '''
