@@ -20,6 +20,7 @@ prone to errors:
     6. == mess with = , or vice versa
     7. range(m, n) n is exclude
     8. join str + str(1), remember to convert int to str or vice versa
+    9. generator and iterator can only iterate once
 
 
 
