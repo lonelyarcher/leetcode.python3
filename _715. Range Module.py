@@ -20,15 +20,28 @@ The total number of calls to removeRange in a single test case is at most 1000. 
 class RangeModule:
 
     def __init__(self):
-        
+        self.X = [0, 10**9]
+        self.track = [False] * 2
 
-    def addRange(self, left: int, right: int) -> None:
-        
+    def addRange(self, left, right, track=True):
+        def index(x):
+            i = bisect.bisect_left(self.X, x)
+            if self.X[i] != x:
+                self.X.insert(i, x)
+                self.track.insert(i, self.track[i-1])
+            return i
+        i = index(left)
+        j = index(right)
+        self.X[i:j] = [left]
+        self.track[i:j] = [track]
 
-    def queryRange(self, left: int, right: int) -> bool:
-        
+    def queryRange(self, left, right):
+        i = bisect.bisect(self.X, left) - 1
+        j = bisect.bisect_left(self.X, right)
+        return all(self.track[i:j])
 
-    def removeRange(self, left: int, right: int) -> None:
+    def removeRange(self, left, right):
+        self.addRange(left, right, False)
         
 
 

@@ -144,3 +144,5 @@ try:
     pass
 except:
     raise
+
+# binary search, first GE if f(mid) >= target, f is positive increasing. r = mid

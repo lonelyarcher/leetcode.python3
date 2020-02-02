@@ -34,6 +34,47 @@ All atom names consist of lowercase letters, except for the first character whic
 The length of formula will be in the range [1, 1000].
 formula will only consist of letters, digits, and round parentheses, and is a valid formula as defined in the problem. """
 
+import collections, re
 class Solution:
     def countOfAtoms(self, formula: str) -> str:
+        i, n = 0, len(formula)
+        
+        def parseNum():
+            nonlocal i
+            ans = ''
+            while i < n and formula[i].isdigit():
+                ans += formula[i]
+                i += 1
+            return int(ans) if ans else 1
+
+        
+        def parse():
+            nonlocal i
+            cnt = collections.Counter()
+            while i < n and formula[i] != ')':
+                if re.match(r'[A-Z]', formula[i]) != None:
+                    key = formula[i]
+                    i += 1
+                    while i < n and re.match(r'[a-z]', formula[i]):
+                        key += formula[i]
+                        i += 1
+                    cnt[key] += parseNum()
+                elif formula[i] == '(':
+                    i += 1
+                    innerCnt = parse()
+                    cnt += innerCnt
+            i += 1
+            times = parseNum()
+            for k in cnt:
+                cnt[k] *= times
+            return cnt
+
+        counter = parse()
+        return ''.join(k+str(counter[k] if counter[k] > 1 else "") for k in sorted(counter))
+
+print(Solution().countOfAtoms("H2O"))  #"H2O"
+print(Solution().countOfAtoms("Mg(OH)2")) # Output: "H2MgO2"
+print(Solution().countOfAtoms("K4(ON(SO3)2)2")) # Output: "K4N2O14S4"
+        
+        
         
