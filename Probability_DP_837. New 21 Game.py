@@ -1,6 +1,7 @@
 """ Alice plays the following game, loosely based on the card game "21".
 
-Alice starts with 0 points, and draws numbers while she has less than K points.  During each draw, she gains an integer number of points randomly from the range [1, W], where W is an integer.  Each draw is independent and the outcomes have equal probabilities.
+Alice starts with 0 points, and draws numbers while she has less than K points.  During each draw, she gains an integer number of points randomly from the range [1, W], 
+where W is an integer.  Each draw is independent and the outcomes have equal probabilities.
 
 Alice stops drawing numbers when she gets K or more points.  What is the probability that she has N or less points?
 
@@ -45,4 +46,8 @@ class Solution:
             if i < K: wsum += p[i] # add into wsum if we can go further for next i
             if i >= W: wsum -= p[i - W] # substract from wsum if we exceed the W length, because each time we at most increase W
                 
-        return sum(p[i] for i in range(K, min(N + 1, N + 1))) 
+        return sum(p[i] for i in range(K, N + 1)) 
+
+print(Solution().new21Game(N = 10, K = 1, W = 10)) # 1
+print(Solution().new21Game(N = 6, K = 1, W = 10)) # 0.6
+print(Solution().new21Game(N = 21, K = 17, W = 10)) # 0.73278
