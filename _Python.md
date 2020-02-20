@@ -32,3 +32,6 @@ Trie: build by loop the inserting word chars, dict.setdefault(key, default_val) 
 
 
 
+bin(3) = '0b11'
+bin(2) = '0b10'
+
