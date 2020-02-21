@@ -40,18 +40,34 @@ Constraints:
 events[i].length == 2
 1 <= events[i][0] <= events[i][1] <= 10^5 """
 
+'''
+Greedy, discretely go through the index from 1 to 100000, add the events into a heap by ending time'
+pop out the smallest ending time if heap has events, increase the count for answer
+You need clear all the event end at this index.
+'''
+
 from typing import List
-import heapq
+import heapq, collections
 class Solution:
     def maxEvents(self, events: List[List[int]]) -> int:
         ans = 0
-        a = [[] for _ in range(100000)]
+        s = collections.defaultdict(list)
         for e in events:
-            heapq.heappush(a[e[0]], e[1])
-        for i in range(100000):
-            if len(a[i]) == 1:
+            s[e[0]].append(e)
+        heap = []
+        for i in range(100001):
+            for ei in s[i]:
+                heapq.heappush(heap, ei[1])
+            if heap:
+                cur = heapq.heappop(heap)
                 ans += 1
-                
+            while heap and heap[0] == i: # clear all the events end at i
+                heapq.heappop(heap)
+        return ans
+
+        
+
+
 
 
 print(Solution().maxEvents([[1,2],[2,3],[3,4]])) #3
