@@ -134,7 +134,7 @@ print(6/2)
 print(3.0 in {3} and 3.0 == 3)
 print(range(4)[:2])
 print(ord('a'))
-
+print('a'*10)
 
 #python string methods:
 # rstrip()
