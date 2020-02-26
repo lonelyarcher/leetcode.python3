@@ -66,10 +66,7 @@ class Solution:
         elif r == 2:
             remove(1) or remove(1) or remove(4) or remove(4) or remove(7) or remove(7)
         if len(cnt) == 1 and 0 in cnt: return '0'
-        ans = ''
-        for i in range(9, -1, -1):
-            ans += str(i)*cnt[i]
-        return ans
+        return "".join(str(i)*cnt[i] for i in range(10)[::-1])
 print(Solution().largestMultipleOfThree([8,1,9])) # "981"
 print(Solution().largestMultipleOfThree([8,6,7,1,0])) # "8760"
 print(Solution().largestMultipleOfThree([1])) #
