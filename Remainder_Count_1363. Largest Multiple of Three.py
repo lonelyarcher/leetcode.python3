@@ -30,35 +30,46 @@ Constraints:
 0 <= digits[i] <= 9
 The returning answer must not contain unnecessary leading zeros. """
 
+
+'''
+O(n) time complexity, remainder = sum(digits) % 3 will have three cases: 
+1. r == 0: concat the digits following the descendant order will be the answer
+2. r == 1: 
+    if digits have 1, 4, 7, then remove one is the answer, of course order is 1, 4, 7. 
+    if not, then need remove two of 2, 5, 8. We can use a trick, try to remove two 2, two 5, then two 8, if we can get r % 3 == 0, then stop
+3. r == 2: 
+    same as r==1, first remove 2, 5, 8, then two of 1, 4, 7, until r % 3 == 0
+output, need consider '', '00000' -> 0, and use count sort to achieve O(n) time.
+'''
+
 from typing import List
 import collections
 class Solution:
     def largestMultipleOfThree(self, digits: List[int]) -> str:
         cnt = collections.Counter(digits)
         r = sum(digits) % 3
-        def output():
-            ans = ''
-            for i in range(9, -1, -1):
-                if cnt[i] > 0: ans += str(i)*cnt[i]
-            return '0' if ans == '0'*len(ans) else ans
         def remove(i):
-            if i in cnt and cnt[i] > 0:
+            if cnt[i] > 0:
                 cnt[i] -= 1
                 if cnt[i] == 0: 
                     del cnt[i]
+            if sum(i * cnt[i] for i in cnt) % 3 == 0: 
                 return True
-            else:
+            else: 
                 return False
-        if r == 0: 
-            return output()
+        if r == 1 and cnt[1] + cnt[4] + cnt[7]:
+            remove(1) or remove(4) or remove(7)
+        elif r == 2 and cnt[2] + cnt[5] + cnt[8]:
+            remove(2) or remove(5) or remove(8)
         elif r == 1:
-            if remove(1) or remove(4) or remove(7): return output
-            elif remove(2, 5) or remove(2, 8) or remove(5, 8): return output
-            return ''
-        else:
-            if remove(2) or remove(5) or remove(8): return output
-            elif remove(1, 4) or remove(4, 7) or remove(1, 7): return output
-            return ''
+            remove(2) or remove(2) or remove(5) or remove(5) or remove(8) or remove(8) # use 'or' to achieve to r%3==0, once achieve then stop
+        elif r == 2:
+            remove(1) or remove(1) or remove(4) or remove(4) or remove(7) or remove(7)
+        if len(cnt) == 1 and 0 in cnt: return '0'
+        ans = ''
+        for i in range(9, -1, -1):
+            ans += str(i)*cnt[i]
+        return ans
 print(Solution().largestMultipleOfThree([8,1,9])) # "981"
 print(Solution().largestMultipleOfThree([8,6,7,1,0])) # "8760"
 print(Solution().largestMultipleOfThree([1])) #
