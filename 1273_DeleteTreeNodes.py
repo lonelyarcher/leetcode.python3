@@ -40,5 +40,5 @@ class Solution:
             if sub_sum == 0:
                 sub_num = 0
             return sub_sum, sub_num
-        return dfs(-1)[1] - 1
+        return dfs(-1)[1] - 1 # minus one because there is a fake node -1 point to 0
 print(Solution().deleteTreeNodes(nodes = 7, parent = [-1,0,0,1,2,2,2], value = [1,-2,4,0,-2,-1,-1])) # output: 2
